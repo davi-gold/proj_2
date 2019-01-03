@@ -5,11 +5,14 @@
 #ifndef PROJ_2_SERVER_H
 #define PROJ_2_SERVER_H
 
-#include "ClientHandler.h"
+namespace server_side ‬{
+class Server;
+}
 
-class Server {
-    virtual void open(int port, ClientHandler c) = 0;
-    virtual void stop() = 0;
+class server_side::Server {
+    virtual void open(int port) = 0;
+
+    virtual void stop(int port) = 0;
 };
 
 #endif //PROJ_2_SERVER_H
