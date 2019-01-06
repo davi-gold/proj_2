@@ -11,12 +11,12 @@
 
 class MyTestClientHandler : public ClientHandler {
     // members declarations
-    Solver *solver;
-    CacheManager *cm;
+    Solver<string, string> *solver;
+    CacheManager<string, string> *cm;
 
 public:
     // constructor and functions declarations
-    MyTestClientHandler(Solver *s, CacheManager *c);
+    MyTestClientHandler(Solver<string, string> *s, CacheManager<string, string> *c);
     string readFromSocket(int socket);
     void handleClient(int socket) override;
 };

@@ -7,7 +7,7 @@
 
 #include "ClientHandler.h"
 
-namespace server_side{
+namespace server_side {
     class Server;
 }
 

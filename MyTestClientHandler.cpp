@@ -4,13 +4,17 @@
 
 #include <sys/socket.h>
 #include <cstring>
+#include <iostream>
 #include "MyTestClientHandler.h"
 
 // constructor
-MyTestClientHandler::MyTestClientHandler(Solver *s, CacheManager *c) {
+MyTestClientHandler::MyTestClientHandler(Solver<string, string> *s, CacheManager<string, string> *c) {
     this->solver = s;
     this->cm = c;
 }
+
+void writeToClient(int socket, string solution) {}
+
 
 // function: gets socket and return the message received from socket until end of line
 string readFromSocket(int socket) {
@@ -18,9 +22,10 @@ string readFromSocket(int socket) {
     string problemTemp;
     string problemFinal;
     // read continuously from socket
-    while (switchFlag == true) {
+    while (switchFlag) {
         // first, read all data from socket into buffer
-        char[256] buffer;
+        char[256]
+        buffer;
         int messageLength = recv(socket, buffer, sizeof(buffer), 0);
         // if the message from client is not empty
         if (messageLength > 0) {
@@ -57,13 +62,22 @@ string readFromSocket(int socket) {
 }
 
 // overridden virtual function
-void handleClient(int socket) {
+void MyTestClientHandler::handleClient(int socket) {
     bool finish = false;
     string end = {"end"};
     string fromClient;
-    while (finish == false){
+    while (finish == false) {
         fromClient = readFromSocket(socket);
-        if(!fromClient.strcmp(end));
-    }
+        if (fromClient == end) {
+            finish = true;
+        } else {
+            if (this->cm->isSaved(fromClient))
+                writeToClient(socket, this->cm->getSolution(fromClient));
+            else {
+                
+                this->cm->saveSolution(this->solver->solve(fromClient));
+            }
+        }
 
+    }
 }

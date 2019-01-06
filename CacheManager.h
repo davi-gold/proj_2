@@ -9,10 +9,13 @@
 #include "Problem.h"
 #include "Solution.h"
 
+template <class P, class S>
+
 class CacheManager {
-    virtual bool isSaved(Problem p) = 0;
-    virtual Solution getSolution(Problem p) = 0;
-    virtual bool saveSolution(Solution s) = 0;
+public:
+    virtual bool isSaved(P p) = 0;
+    virtual S getSolution(P p) = 0;
+    virtual bool saveSolution(S s) = 0;
 };
 
 

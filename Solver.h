@@ -8,8 +8,10 @@
 #include "Solution.h"
 #include "Problem.h"
 
+template <class P, class S>
+
 class Solver {
-virtual Solution solve(Problem p) = 0;
+virtual S solve(P p) = 0;
 };
 
 
