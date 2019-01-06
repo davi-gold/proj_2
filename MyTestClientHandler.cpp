@@ -13,6 +13,8 @@ MyTestClientHandler::MyTestClientHandler(Solver<string, string> *s, CacheManager
     this->cm = c;
 }
 
+// function: gets socket and message and writes it to the client
+// TODO 1
 void writeToClient(int socket, string solution) {}
 
 
@@ -66,18 +68,19 @@ void MyTestClientHandler::handleClient(int socket) {
     bool finish = false;
     string end = {"end"};
     string fromClient;
-    while (finish == false) {
+    while (!finish) {
         fromClient = readFromSocket(socket);
         if (fromClient == end) {
             finish = true;
         } else {
             if (this->cm->isSaved(fromClient))
+                // TODO 2
                 writeToClient(socket, this->cm->getSolution(fromClient));
             else {
-                
-                this->cm->saveSolution(this->solver->solve(fromClient));
+                string solution = this->solver->solve(fromClient); // solve the problem
+                this->cm->saveSolution(solution); // save the solution
+                writeToClient(socket, solution); // write to client
             }
         }
-
     }
 }
