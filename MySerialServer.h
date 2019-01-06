@@ -8,9 +8,10 @@
 
 #include "Server.h"
 
-class MySerialServer : public Server {
-virtual void open(int port);
-virtual void stop(int port);
+class MySerialServer : public server_side::Server {
+public:
+    virtual void open(int port, ClientHandler *c);
+    virtual void stop(int port);
 };
 
 
