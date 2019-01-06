@@ -11,6 +11,7 @@
 template <class P, class S>
 
 class Solver {
+public:
 virtual S solve(P p) = 0;
 };
 

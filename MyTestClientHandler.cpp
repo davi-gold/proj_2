@@ -13,11 +13,13 @@ MyTestClientHandler::MyTestClientHandler(Solver<string, string> *s, CacheManager
     this->cm = c;
 }
 
+// function: gets socket and message and writes it to the client
+// TODO 1
 void writeToClient(int socket, string solution) {}
 
 
 // function: gets socket and return the message received from socket until end of line
-string readFromSocket(int socket) {
+string MyTestClientHandler::readFromSocket(int socket) {
     bool switchFlag = true;
     string problemTemp;
     string problemFinal;
@@ -56,7 +58,7 @@ string readFromSocket(int socket) {
     if (!problemFinal.empty())
         return problemFinal;
     else {
-        perror("the string 'problem' is emtpy\n");
+        perror("the string 'problem' is empty\n");
         return nullptr;
     }
 }
@@ -64,20 +66,22 @@ string readFromSocket(int socket) {
 // overridden virtual function
 void MyTestClientHandler::handleClient(int socket) {
     bool finish = false;
-    string end = {"end"};
+    string end = "end";
     string fromClient;
-    while (finish == false) {
+    while (!finish) {
         fromClient = readFromSocket(socket);
         if (fromClient == end) {
             finish = true;
         } else {
             if (this->cm->isSaved(fromClient))
+                // TODO 2
                 writeToClient(socket, this->cm->getSolution(fromClient));
             else {
-                
-                this->cm->saveSolution(this->solver->solve(fromClient));
+                string solution = this->solver->solve(fromClient); // solve the problem
+                this->cm->saveSolution(solution); // save the solution
+                // TODO 3
+                writeToClient(socket, solution); // write to client
             }
         }
-
     }
 }
