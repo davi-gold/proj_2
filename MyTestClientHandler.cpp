@@ -13,11 +13,6 @@ MyTestClientHandler::MyTestClientHandler(Solver<string, string> *s, CacheManager
     this->cm = c;
 }
 
-// function: gets socket and message and writes it to the client
-// TODO 1
-void writeToClient(int socket, string solution) {}
-
-
 // function: gets socket and return the message received from socket until end of line
 string MyTestClientHandler::readFromSocket(int socket) {
     bool switchFlag = true;
@@ -26,8 +21,7 @@ string MyTestClientHandler::readFromSocket(int socket) {
     // read continuously from socket
     while (switchFlag) {
         // first, read all data from socket into buffer
-        char[256]
-        buffer;
+        char[256] buffer;
         int messageLength = recv(socket, buffer, sizeof(buffer), 0);
         // if the message from client is not empty
         if (messageLength > 0) {
@@ -73,14 +67,15 @@ void MyTestClientHandler::handleClient(int socket) {
         if (fromClient == end) {
             finish = true;
         } else {
-            if (this->cm->isSaved(fromClient))
-                // TODO 2
-                writeToClient(socket, this->cm->getSolution(fromClient));
-            else {
+            if (this->cm->isSaved(fromClient)) {
+                // send the solution to client
+                const char *fromClientChar = fromClient.c_str(); // convert the string to char *
+                send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
+            } else {
                 string solution = this->solver->solve(fromClient); // solve the problem
                 this->cm->saveSolution(solution); // save the solution
-                // TODO 3
-                writeToClient(socket, solution); // write to client
+                const char *solutionChar = solution.c_str(); // convert the string to char *
+                send(socket, solutionChar, strlen(solutionChar) , 0); // write to client
             }
         }
     }
