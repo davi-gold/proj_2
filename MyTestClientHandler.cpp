@@ -21,7 +21,7 @@ string MyTestClientHandler::readFromSocket(int socket) {
     // read continuously from socket
     while (switchFlag) {
         // first, read all data from socket into buffer
-        char[256] buffer;
+        char buffer[256];
         int messageLength = recv(socket, buffer, sizeof(buffer), 0);
         // if the message from client is not empty
         if (messageLength > 0) {
