@@ -19,7 +19,7 @@ void writeToClient(int socket, string solution) {}
 
 
 // function: gets socket and return the message received from socket until end of line
-string readFromSocket(int socket) {
+string MyTestClientHandler::readFromSocket(int socket) {
     bool switchFlag = true;
     string problemTemp;
     string problemFinal;
@@ -58,7 +58,7 @@ string readFromSocket(int socket) {
     if (!problemFinal.empty())
         return problemFinal;
     else {
-        perror("the string 'problem' is emtpy\n");
+        perror("the string 'problem' is empty\n");
         return nullptr;
     }
 }
@@ -79,6 +79,7 @@ void MyTestClientHandler::handleClient(int socket) {
             else {
                 string solution = this->solver->solve(fromClient); // solve the problem
                 this->cm->saveSolution(solution); // save the solution
+                // TODO 3
                 writeToClient(socket, solution); // write to client
             }
         }
