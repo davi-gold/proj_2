@@ -13,7 +13,7 @@ using namespace std;
 
 class StringReverser : public Solver<string, string> {
 public:
-    string solve(string problem);
+    string solve(string problem) override;
 };
 
 
