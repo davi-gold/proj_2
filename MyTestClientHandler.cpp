@@ -66,7 +66,7 @@ string readFromSocket(int socket) {
 // overridden virtual function
 void MyTestClientHandler::handleClient(int socket) {
     bool finish = false;
-    string end = {"end"};
+    string end = "end";
     string fromClient;
     while (!finish) {
         fromClient = readFromSocket(socket);
