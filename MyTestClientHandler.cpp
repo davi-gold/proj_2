@@ -21,8 +21,7 @@ string MyTestClientHandler::readFromSocket(int socket) {
     // read continuously from socket
     while (switchFlag) {
         // first, read all data from socket into buffer
-        char[256]
-        buffer;
+        char[256] buffer;
         int messageLength = recv(socket, buffer, sizeof(buffer), 0);
         // if the message from client is not empty
         if (messageLength > 0) {
@@ -71,7 +70,7 @@ void MyTestClientHandler::handleClient(int socket) {
             if (this->cm->isSaved(fromClient)) {
                 // send the solution to client
                 const char *fromClientChar = fromClient.c_str(); // convert the string to char *
-                send(socket, fromClientChar, strlen(fromClientChar), 0);
+                send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
             } else {
                 string solution = this->solver->solve(fromClient); // solve the problem
                 this->cm->saveSolution(solution); // save the solution
