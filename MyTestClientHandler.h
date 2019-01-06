@@ -5,8 +5,6 @@
 #ifndef PROJ_2_MYTESTCLIENTHANDLER_H
 #define PROJ_2_MYTESTCLIENTHANDLER_H
 
-
-
 #include "ClientHandler.h"
 #include "CacheManager.h"
 #include "Solver.h"
@@ -18,8 +16,9 @@ class MyTestClientHandler : public ClientHandler {
 
 public:
     // constructor and functions declarations
-    MyTestClientHandler();
-    virtual void handleClient(ifstream is, ofstream os);
-
+    MyTestClientHandler(Solver *s, CacheManager *c);
+    string readFromSocket(int socket);
+    void handleClient(int socket) override;
 };
+
 #endif //PROJ_2_MYTESTCLIENTHANDLER_H
