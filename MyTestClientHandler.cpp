@@ -28,14 +28,13 @@ string MyTestClientHandler::readFromSocket(int socket) {
             // iterate over the buffer to find end of line
             for (int i = 0; i < messageLength; i++) {
                 // as long as it is not end of line -> update the string
-                if (buffer[i] != '\n')
+                if (buffer[i] != '\r' && buffer[i + 1] != '\n')
                     problemTemp += buffer[i];
                 else {
                     // if it is end of line and problem is not empty -> update the final string
                     if (problemTemp.length() > 0) {
                         // copy content from problemTemp to problemFinal
-                        for (int j = 0; j < problemTemp.length(); j++)
-                            problemFinal[j] = problemTemp[j];
+                        problemFinal = problemTemp;
                         problemTemp = "";
                         switchFlag = false;
                     } else {
@@ -75,7 +74,7 @@ void MyTestClientHandler::handleClient(int socket) {
                 string solution = this->solver->solve(fromClient); // solve the problem
                 this->cm->saveSolution(fromClient, solution); // save the solution
                 const char *solutionChar = solution.c_str(); // convert the string to char *
-                send(socket, solutionChar, strlen(solutionChar) , 0); // write to client
+                send(socket, solutionChar, strlen(solutionChar), 0); // write to client
             }
         }
     }
