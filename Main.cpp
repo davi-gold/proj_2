@@ -17,7 +17,7 @@ int boot::Main::main(int argc, char *argv[]) {
     ClientHandler *mch = new MyTestClientHandler(strReverse, fileCM);
 
     // calling 'open' function in server
-    server->open(atoi(argv[0]), mch);
+    server->open(atoi(argv[1]), mch);
 
     return 0;
 }
