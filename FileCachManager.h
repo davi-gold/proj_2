@@ -15,7 +15,7 @@ using namespace std;
 template<class P, class S>
 
 class FileCachManager : public CacheManager<P, S> {
-    map<string, string> probSol;
+    map<P, S> probSol;
     string fileName;
 
 public:
