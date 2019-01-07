@@ -24,6 +24,7 @@ void MySerialServer::open(int port, ClientHandler *c) {
         perror("accept");
         exit(EXIT_FAILURE);
     }
+
     //WILL OPEN A THREAD HERE
     //openReader(new_socket, buffer, readSpeed);
     //thread first();
