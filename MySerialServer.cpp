@@ -2,10 +2,6 @@
 // Created by david on 1/3/19.
 //
 
-#include <bits/socket.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <thread>
 #include "MySerialServer.h"
 
 void MySerialServer::open(int port, ClientHandler *c) {
@@ -18,18 +14,29 @@ void MySerialServer::open(int port, ClientHandler *c) {
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(port);
     bind(server_fd, (struct sockaddr *) &address, sizeof(address));
-    listen(server_fd, 5);
 
-    if ((new_socket = accept(server_fd, (struct sockaddr *) &address,
-                             (socklen_t*) &addrlen)) < 0) {
-        perror("accept");
-        exit(EXIT_FAILURE);
-    }
+
+    thread first(listenToClient, server_fd, address, addrlen, c);
+    first.detach();
+
 
     //WILL OPEN A THREAD HERE
-    //openReader(new_socket, buffer, readSpeed);
-    //thread first();
-    //first.detach();
+
+}
+
+void MySerialServer:: listenToClient(int server_fd, struct sockaddr_in address, int addrlen, ClientHandler *c){
+    int new_socket;
+
+    while(true){
+        listen(server_fd, 10);
+        if ((new_socket = accept(server_fd, (struct sockaddr *) &address,
+                                 (socklen_t*) &addrlen)) < 0) {
+            perror("accept");
+            exit(EXIT_FAILURE);
+        }
+        c->handleClient(new_socket);
+        //sleep here??
+    }
 }
 
 void MySerialServer::stop(int port) {
