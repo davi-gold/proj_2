@@ -18,6 +18,7 @@ int boot::Main::main(int argc, char *argv[]) {
 
     // calling 'open' function in server
     server->open(atoi(argv[1]), mch);
+    while(true){};
 
     return 0;
 }

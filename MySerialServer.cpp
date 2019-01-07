@@ -7,18 +7,18 @@
 MySerialServer::MySerialServer() {}
 
 void MySerialServer::open(int port, ClientHandler *c) {
-    int server_fd, new_socket, valread;
+    int sockfd, new_socket, valread;
     //char buffer[1024];
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(port);
-    bind(server_fd, (struct sockaddr *) &address, sizeof(address));
-    mySockfd = server_fd;
-
-    thread first(listenToClient, server_fd, address, addrlen, c);
+    bind(sockfd, (struct sockaddr *) &address, sizeof(address));
+    mySockfd = sockfd;
+//    listenToClient(sockfd,address,addrlen,c);
+    thread first(listenToClient, sockfd, address, addrlen, c);
     first.detach();
 
 
@@ -26,12 +26,12 @@ void MySerialServer::open(int port, ClientHandler *c) {
 
 }
 
-void MySerialServer::listenToClient(int server_fd, struct sockaddr_in address, int addrlen, ClientHandler *c) {
+void MySerialServer::listenToClient(int sockfd, struct sockaddr_in address, int addrlen, ClientHandler *c) {
     int new_socket;
 
     while (true) {
-        listen(server_fd, 10);
-        if ((new_socket = accept(server_fd, (struct sockaddr *) &address,
+        listen(sockfd, 5);
+        if ((new_socket = accept(sockfd, (struct sockaddr *) &address,
                                  (socklen_t *) &addrlen)) < 0) {
             perror("error");
             exit(EXIT_FAILURE);
