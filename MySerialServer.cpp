@@ -4,6 +4,7 @@
 
 #include "MySerialServer.h"
 
+MySerialServer:: MySerialServer(){}
 void MySerialServer::open(int port, ClientHandler *c) {
     int server_fd, new_socket, valread;
     //char buffer[1024];
