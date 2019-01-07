@@ -17,6 +17,7 @@ void MySerialServer::open(int port, ClientHandler *c) {
     address.sin_port = htons(port);
     bind(sockfd, (struct sockaddr *) &address, sizeof(address));
     mySockfd = sockfd;
+    listen(sockfd, 5);
 //    listenToClient(sockfd,address,addrlen,c);
     thread first(listenToClient, sockfd, address, addrlen, c);
     first.detach();
@@ -30,7 +31,6 @@ void MySerialServer::listenToClient(int sockfd, struct sockaddr_in address, int 
     int new_socket;
 
     while (true) {
-        listen(sockfd, 5);
         if ((new_socket = accept(sockfd, (struct sockaddr *) &address,
                                  (socklen_t *) &addrlen)) < 0) {
             perror("error");

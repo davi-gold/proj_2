@@ -19,7 +19,6 @@ class FileCacheManager : public CacheManager<P, S> {
     string fileName;
 
 public:
-    typedef map<P, S> psIt;
 
     FileCacheManager(const string fName) {
         fileName = fName;
