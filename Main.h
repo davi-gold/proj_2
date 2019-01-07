@@ -12,5 +12,6 @@ namespace boot {
 }
 
 class boot::Main {
-    int main(int argc, char *argv[]);
+public:
+   static int main(int argc, char *argv[]);
 };
