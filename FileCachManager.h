@@ -35,7 +35,7 @@ public:
         return false;
     };
 
-    virtual string getSolution(P p) {
+    virtual S getSolution(P p) {
         for (psIt it: probSol) {
             if (it->first == p) {
                 return it->second;
