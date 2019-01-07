@@ -19,6 +19,7 @@ void MySerialServer::open(int port, ClientHandler *c) {
     address.sin_port = htons(port);
     bind(server_fd, (struct sockaddr *) &address, sizeof(address));
     listen(server_fd, 5);
+
     if ((new_socket = accept(server_fd, (struct sockaddr *) &address,
                              (socklen_t*) &addrlen)) < 0) {
         perror("accept");
