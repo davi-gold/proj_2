@@ -21,13 +21,13 @@ class FileCacheManager : public CacheManager<P, S> {
 public:
     typedef map<P, S> psIt;
 
-    FileCacheManager(string fName) {
+    FileCacheManager(const string fName) {
         fileName = fName;
         creatMap();
     };
 
     virtual bool isSaved(P p) {
-        for (psIt it: probSol) {
+        for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
             if (it->first == p) {
                 return true;
             }
@@ -36,7 +36,7 @@ public:
     };
 
     virtual S getSolution(P p) {
-        for (psIt it: probSol) {
+        for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
             if (it->first == p) {
                 return it->second;
             }
@@ -74,7 +74,7 @@ public:
         if (myFile.is_open()) {
             //saving number of problems and solutions to file
             myFile << probSol.size() << endl;
-            for (psIt it: probSol) {
+            for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
                 myFile << it->first << endl << it->second << endl;
             }
         }
