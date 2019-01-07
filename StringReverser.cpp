@@ -4,6 +4,8 @@
 
 #include "StringReverser.h"
 
+StringReverser::StringReverser(){}
+
 string StringReverser::solve(string problem) {
     int len = problem.length();
     for (int i = 0; i < len / 2; i++)

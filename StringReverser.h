@@ -13,6 +13,8 @@ using namespace std;
 
 class StringReverser : public Solver<string, string> {
 public:
+    // empty constructor
+    StringReverser();
     string solve(string problem) override;
 };
 
