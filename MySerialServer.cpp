@@ -7,8 +7,7 @@
 MySerialServer::MySerialServer() {}
 
 void MySerialServer::open(int port, ClientHandler *c) {
-    int sockfd, new_socket, valread;
-    //char buffer[1024];
+    int sockfd;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -20,16 +19,19 @@ void MySerialServer::open(int port, ClientHandler *c) {
     listen(sockfd, 5);
 
     thread first(listenToClient, sockfd, address, addrlen, c);
-    first.detach();
+    // wait for 'first' to finish
+    first.join();
+    // close the socket
+    this->stop();
 }
 
 void MySerialServer::stop() {
+    cout << "Closing socket..." << endl;
     close(mySockfd);
 }
 
 void MySerialServer::listenToClient(int sockfd, struct sockaddr_in address, int addrlen, ClientHandler *c) {
     int new_socket;
-
     bool flag = true;
     while (flag) {
         bool timeOut = true;
@@ -56,6 +58,7 @@ void MySerialServer::listenToClient(int sockfd, struct sockaddr_in address, int 
             cout << "<<< TIME OUT >>>" << endl;
             flag = false; // exiting while loop
         }
-        c->handleClient(new_socket);
+        if (flag) // only if ACCEPT succeeded --> call 'handleClient'
+            c->handleClient(new_socket);
     }
 }
