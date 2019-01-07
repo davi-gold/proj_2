@@ -33,12 +33,12 @@ void MySerialServer:: listenToClient(int server_fd, struct sockaddr_in address, 
         listen(server_fd, 10);
         if ((new_socket = accept(server_fd, (struct sockaddr *) &address,
                                  (socklen_t*) &addrlen)) < 0) {
-            perror("accept");
+            perror("error");
             exit(EXIT_FAILURE);
         }
         c->handleClient(new_socket);
         //sleep here??
-        this_thread::sleep_for(chrono::milliseconds(int(250)));
+        //this_thread::sleep_for(chrono::milliseconds(int(250)));
     }
 }
 
