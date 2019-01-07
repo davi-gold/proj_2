@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <cstring>
 #include <iostream>
+#include <unistd.h>
 #include "MyTestClientHandler.h"
 
 // constructor
@@ -77,5 +78,5 @@ void MyTestClientHandler::handleClient(int socket) {
                 send(socket, solutionChar, strlen(solutionChar), 0); // write to client
             }
         }
-    }
+    } close(socket);
 }
