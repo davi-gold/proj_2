@@ -15,7 +15,7 @@ void MySerialServer::open(int port, ClientHandler *c) {
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(port);
     bind(server_fd, (struct sockaddr *) &address, sizeof(address));
-
+    mySockfd = server_fd;
 
     thread first(listenToClient, server_fd, address, addrlen, c);
     first.detach();
@@ -41,6 +41,6 @@ void MySerialServer:: listenToClient(int server_fd, struct sockaddr_in address, 
     }
 }
 
-void MySerialServer::stop(int port) {
-
+void MySerialServer::stop() {
+    close(mySockfd);
 }

@@ -19,11 +19,12 @@
 #include "Server.h"
 
 class MySerialServer : public server_side::Server {
+    int mySockfd;
 public:
     MySerialServer();
     virtual void open(int port, ClientHandler *c);
     static void listenToClient(int server_fd, struct sockaddr_in address, int addrlen, ClientHandler *c);
-    virtual void stop(int port);
+    virtual void stop();
 };
 
 
