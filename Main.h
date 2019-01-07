@@ -12,5 +12,5 @@ namespace boot {
 }
 
 class boot::Main {
-    int main(int numArg, char *args[]);
+    int main(int argc, char *argv[]);
 };

@@ -5,7 +5,7 @@
 #include "StringReverser.h"
 #include "Main.h"
 
-int boot::Main::main(int numArg, char **args) {
+int boot::Main::main(int argc, char *argv[]) {
     // creating the server object
     MySerialServer *server = new MySerialServer();
 
@@ -17,7 +17,7 @@ int boot::Main::main(int numArg, char **args) {
     MyTestClientHandler *mch = new MyTestClientHandler(strReverse, fileCM);
 
     // calling 'open' function in server
-    server->open(atoi(args[0]), mch);
+    server->open(atoi(argv[0]), mch);
 
     return 0;
 }
