@@ -37,6 +37,7 @@ void MySerialServer:: listenToClient(int server_fd, struct sockaddr_in address, 
         }
         c->handleClient(new_socket);
         //sleep here??
+        this_thread::sleep_for(chrono::milliseconds(int(250)));
     }
 }
 

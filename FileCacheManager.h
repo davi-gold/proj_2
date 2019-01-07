@@ -14,14 +14,14 @@ using namespace std;
 
 template<class P, class S>
 
-class FileCachManager : public CacheManager<P, S> {
+class FileCacheManager : public CacheManager<P, S> {
     map<P, S> probSol;
     string fileName;
 
 public:
     typedef map<P, S> psIt;
 
-    FileCachManager(string fName) {
+    FileCacheManager(string fName) {
         fileName = fName;
         creatMap();
     };
