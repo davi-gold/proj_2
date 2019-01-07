@@ -7,14 +7,14 @@
 
 int boot::Main::main(int argc, char *argv[]) {
     // creating the server object
-    MySerialServer *server = new MySerialServer();
+    server_side::Server *server = new MySerialServer();
 
     // Solver --> StringReverser
     // ‫‪CacheManager --> FileCacheManager
     StringReverser *strReverse = new StringReverser();
-    FileCacheManager<string, string> *fileCM = new FileCacheManager<string, string>("fileCache.txt");
+    CacheManager<string, string> *fileCM = new FileCacheManager<string, string>("fileCache.txt");
 
-    MyTestClientHandler *mch = new MyTestClientHandler(strReverse, fileCM);
+    ClientHandler *mch = new MyTestClientHandler(strReverse, fileCM);
 
     // calling 'open' function in server
     server->open(atoi(argv[0]), mch);
