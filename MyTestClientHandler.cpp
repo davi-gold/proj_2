@@ -73,7 +73,7 @@ void MyTestClientHandler::handleClient(int socket) {
                 send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
             } else {
                 string solution = this->solver->solve(fromClient); // solve the problem
-                this->cm->saveSolution(solution); // save the solution
+                this->cm->saveSolution(fromClient, solution); // save the solution
                 const char *solutionChar = solution.c_str(); // convert the string to char *
                 send(socket, solutionChar, strlen(solutionChar) , 0); // write to client
             }
