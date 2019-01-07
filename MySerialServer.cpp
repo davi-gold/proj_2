@@ -4,7 +4,7 @@
 
 #include "MySerialServer.h"
 
-MySerialServer::MySerialServer() {}
+MySerialServer::MySerialServer() {
 
 void MySerialServer::open(int port, ClientHandler *c) {
     int sockfd, new_socket, valread;
