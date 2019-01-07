@@ -68,8 +68,9 @@ void MyTestClientHandler::handleClient(int socket) {
             finish = true;
         } else {
             if (this->cm->isSaved(fromClient)) {
+                string sol = this->cm->getSolution(fromClient);
                 // send the solution to client
-                const char *fromClientChar = fromClient.c_str(); // convert the string to char *
+                const char *fromClientChar = sol.c_str(); // convert the string to char *
                 send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
             } else {
                 string solution = this->solver->solve(fromClient); // solve the problem
