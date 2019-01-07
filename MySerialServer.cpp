@@ -4,7 +4,7 @@
 
 #include "MySerialServer.h"
 
-MySerialServer:: MySerialServer(){}
+MySerialServer::MySerialServer() {}
 
 void MySerialServer::open(int port, ClientHandler *c) {
     int server_fd, new_socket, valread;
@@ -26,13 +26,13 @@ void MySerialServer::open(int port, ClientHandler *c) {
 
 }
 
-void MySerialServer:: listenToClient(int server_fd, struct sockaddr_in address, int addrlen, ClientHandler *c){
+void MySerialServer::listenToClient(int server_fd, struct sockaddr_in address, int addrlen, ClientHandler *c) {
     int new_socket;
 
-    while(true){
+    while (true) {
         listen(server_fd, 10);
         if ((new_socket = accept(server_fd, (struct sockaddr *) &address,
-                                 (socklen_t*) &addrlen)) < 0) {
+                                 (socklen_t *) &addrlen)) < 0) {
             perror("error");
             exit(EXIT_FAILURE);
         }
