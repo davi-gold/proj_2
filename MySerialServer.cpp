@@ -60,5 +60,6 @@ void MySerialServer::listenToClient(int sockfd, struct sockaddr_in address, int 
         }
         if (flag) // only if ACCEPT succeeded --> call 'handleClient'
             c->handleClient(new_socket);
+
     }
 }

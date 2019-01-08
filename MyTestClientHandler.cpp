@@ -57,7 +57,7 @@ string MyTestClientHandler::readFromSocket(int socket) {
     }
 }
 
-// overridden virtual function
+// overridden virtual function - handles all clients
 void MyTestClientHandler::handleClient(int socket) {
     bool finish = false;
     string end = "end";

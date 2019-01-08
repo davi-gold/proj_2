@@ -16,13 +16,14 @@ template<class P, class S>
 
 class FileCacheManager : public CacheManager<P, S> {
     map<P, S> probSol;
+    map<string, string> stringPSMap;
     string fileName;
 
 public:
 
     FileCacheManager(const string fName) {
         fileName = fName;
-        creatMap();
+        createMap();
     };
 
     virtual bool isSaved(P p) {
@@ -45,23 +46,43 @@ public:
 
     virtual void saveSolution(P p, S s) {
         probSol.insert(pair<P, S>(p, s));
+        ofstream myFile(fileName);
+        //want to append the file
+        if(myFile.is_open()| std::ios_base::app){
+            myFile << p << endl << s << endl;
+        }
     };
 
-    void creatMap() {
+    void createMap() {
         ifstream myFile(fileName);
+        string line;
+        P prob;
+        S sol;
         if (myFile.is_open()) {
             unsigned long int objsNum;
             //NEED TO CHECK IF THIS MAKES THR IFSTREAM GO A ROW BELOW
-            myFile >> objsNum;
+            //myFile >> objsNum;
             //skipping two because every two rows theres a problem and a solution
-            for (unsigned long int i = 0; i < objsNum; i+=2) {
-                P prob;
-                S sol;
+           /* for (unsigned long int i = 0; i < SIZE OF FILE; i+=2) {
+
                 //ALSO HERE- NEED TO CHECK IF THIS MAKES THR IFSTREAM GO A ROW BELOW
                 myFile>>prob;
-                myFile>>sol;
-                probSol.insert(pair<P, S> (prob, sol));
-            }
+               myFile>>sol;
+            }*/
+
+           //line = problem
+           while(getline(myFile, line)){
+
+               //copying line to prob
+                //line>>prob;
+                prob = line;
+               //line = solution
+               getline(myFile, line);
+               //copying line to sol
+               //line>>sol;
+               sol = line;
+               probSol.insert(pair<P, S> (prob, sol));
+           }
         }
 
         myFile.close();
@@ -80,6 +101,8 @@ public:
 
         myFile.close();
     };
+
+
 };
 
 
