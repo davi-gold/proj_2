@@ -6,9 +6,6 @@
 #define PROJ_2_CACHEMANAGER_H
 
 
-#include "Problem.h"
-#include "Solution.h"
-
 template <class P, class S>
 
 class CacheManager {
