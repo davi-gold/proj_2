@@ -38,7 +38,8 @@ public:
     virtual S getSolution(P p) {
         for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
             if (it->first == p) {
-                return it->second;
+                string temp = it->second+"\r\n";
+                return temp;
             }
         }
         throw "no saved solution for that problem";
@@ -48,6 +49,7 @@ public:
         probSol.insert(pair<P, S>(p, s));
         string prob = p;
         string sol = s;
+        sol = sol.substr(0, sol.size()-1);
         ofstream myFile(fileName, ios::app);
 
         //want to append the file
