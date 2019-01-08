@@ -46,12 +46,13 @@ public:
 
     virtual void saveSolution(P p, S s) {
         probSol.insert(pair<P, S>(p, s));
-        ofstream myFile(fileName);
+        string prob = p;
+        string sol = s;
+        ofstream myFile(fileName, ios::app);
 
-        myFile.open(fileName, ofstream::out|ofstream::app);
         //want to append the file
         if(myFile.is_open()){
-            myFile << p << endl << s << endl;
+            myFile << prob << endl << sol << endl;
             myFile.close();
         }
     };
@@ -61,6 +62,7 @@ public:
         string line;
         P prob;
         S sol;
+        string temp;
         if (myFile.is_open()) {
             unsigned long int objsNum;
             //NEED TO CHECK IF THIS MAKES THR IFSTREAM GO A ROW BELOW
@@ -84,6 +86,7 @@ public:
                //copying line to sol
                //line>>sol;
                sol = line;
+               getline(myFile, temp);
                probSol.insert(pair<P, S> (prob, sol));
            }
         }
