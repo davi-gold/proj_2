@@ -47,9 +47,12 @@ public:
     virtual void saveSolution(P p, S s) {
         probSol.insert(pair<P, S>(p, s));
         ofstream myFile(fileName);
+
+        myFile.open(fileName, ofstream::out|ofstream::app);
         //want to append the file
-        if(myFile.is_open()| std::ios_base::app){
+        if(myFile.is_open()){
             myFile << p << endl << s << endl;
+            myFile.close();
         }
     };
 
