@@ -36,7 +36,7 @@ public:
         return evaluatedNodes;
     };
 
-    virtual S search(ISearcher<P, S, T> searchable);
+    virtual S search(Searchable<T> searchable);
 };
 
 

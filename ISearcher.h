@@ -19,7 +19,7 @@ public:
 
     virtual int getNumberOfNodesEvaluated();
 
-    virtual S search(ISearcher<P, S, T> searchable);
+    virtual S search(Searchable<T> searchable);
 };
 
 #endif //PROJ_2_ISEARCHER_H
