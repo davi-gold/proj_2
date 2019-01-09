@@ -12,16 +12,16 @@ using namespace std;
 template <class T>
 
 class State {
-    string state; // the state represented by a string
+    T state; // the state represented by a string
     double cost; // cost to reach this state (set by a setter)
-    State cameFrom; // the state we came from to this state (setter)
+    T cameFrom; // the state we came from to this state (setter)
 
 public:
     // CTOR
     State(T st){
         state = st;
     }
-    bool Equals(T other){
+    bool equals(T other){
         return state == other;
     }
 };
