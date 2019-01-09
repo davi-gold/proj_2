@@ -15,7 +15,8 @@ class Searcher : public ISearcher<P, S, T> {
 protected:
     priority_queue<State<T>> openList;
     int evaluatedNodes;
-    virtual State<T> popOpenList(){
+
+    virtual State<T> popOpenList() {
         evaluatedNodes++;
         return openList.top();
     };
@@ -26,12 +27,27 @@ public:
         evaluatedNodes = 0;
     };
 
-    virtual int OpenListSize(){
+    bool findInOpenList(State<T> s) {
+        priority_queue<State<T>> openListCpy = this->openList;
+        while (!openListCpy.empty()) {
+            if (s.equals(std::move(const_cast<int &>(openListCpy.top())))) {
+                return true;
+            }
+            openListCpy.pop();
+        }
+        return false;
+    }
+
+    void setEvaluatedNodes(int n){
+        this->evaluatedNodes = n;
+    }
+
+    virtual int OpenListSize() {
         return openList.size();
     };
 
     //purposely not virtual
-    int getNumberOfNodesEvaluated(){
+    int getNumberOfNodesEvaluated() {
         return evaluatedNodes;
     };
 
