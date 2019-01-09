@@ -14,7 +14,7 @@ template <class T>
 class State {
     T state; // the state represented by a string
     double cost; // cost to reach this state (set by a setter)
-    T cameFrom; // the state we came from to this state (setter)
+    State<T> cameFrom; // the state we came from to this state (setter)
 
 public:
     // CTOR
