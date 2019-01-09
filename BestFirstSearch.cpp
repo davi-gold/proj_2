@@ -27,20 +27,3 @@ S BestFirstSearch::search(ISearchable<T> searchable) {
 
 
 }
-
-
-foreach (State
-s in
-succerssors)
-{
-if (!closed.
-Contains(s)
-&& !
-openContaines(s)
-)
-{
-// s.setCameFrom(n); // already done by getSuccessors
-addToOpenList(s);
-}
-else
-}
