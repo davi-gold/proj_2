@@ -12,10 +12,9 @@
 template<class P, class S, class T>
 
 class Searcher : public ISearcher<P, S, T> {
-
+protected:
     priority_queue<State<T>> openList;
     int evaluatedNodes;
-protected:
     virtual State<T> popOpenList(){
         evaluatedNodes++;
         return openList.top();

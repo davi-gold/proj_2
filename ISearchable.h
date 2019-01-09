@@ -1,21 +1,23 @@
 //
-// Created by david on 1/8/19.
+// Created by david on 1/9/19.
 //
 
-#ifndef PROJ_2_SEARCHABLE_H
-#define PROJ_2_SEARCHABLE_H
+#ifndef PROJ_2_ISEARCHABLE_H
+#define PROJ_2_ISEARCHABLE_H
 
-#include <list>
+
+#include "Searchable.h"
 #include "State.h"
-#include "ISearchable.h"
 
 template <class T>
 
-class Searchable : public ISearchable {
+class ISearchable {
 public:
     virtual State<T> getInitialState() = 0;
     virtual bool isGoalState(State<T> s) = 0;
     virtual list<State<T>> getAllPossibleStates(State<T> s) = 0;
 };
 
-#endif //PROJ_2_SEARCHABLE_H
+
+
+#endif //PROJ_2_ISEARCHABLE_H

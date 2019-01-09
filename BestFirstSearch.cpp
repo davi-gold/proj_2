@@ -5,8 +5,10 @@
 #include "BestFirstSearch.h"
 template<class P, class S, class T>
 
-S BestFirstSearch::search(Searchable<T> searchable) {
+S BestFirstSearch::search(ISearchable<T> searchable) {
+   this->openList.push(searchable.getInitialState()); // OPEN = [initial state]
 
+}
         addToOpenList(searchable. getInitialState ()); // inherited from Searcher
         HashSet<State> closed = new HashSet<State>();
         while (OpenListSize > 0) {

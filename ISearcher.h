@@ -15,11 +15,9 @@ protected:
     virtual State<T> popOpenList();
 
 public:
-    virtual int OpenListSize();
-
-    virtual int getNumberOfNodesEvaluated();
-
-    virtual S search(Searchable<T> searchable);
+    virtual int OpenListSize() = 0;
+    virtual int getNumberOfNodesEvaluated() = 0;
+    virtual S search(Searchable<T> searchable) = 0;
 };
 
 #endif //PROJ_2_ISEARCHER_H
