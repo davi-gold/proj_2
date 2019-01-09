@@ -22,7 +22,10 @@ public:
         state = st;
     }
     bool equals(State<T> other){
-        return state == other.state;
+        return state == other.getState();
+    }
+    T getState(){
+        return state;
     }
 };
 
