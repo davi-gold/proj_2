@@ -7,13 +7,14 @@
 
 #include <list>
 #include "State.h"
+#include "ISearchable.h"
 
 template <class T>
 
-class Searchable {
+class Searchable : public ISearchable {
 public:
     virtual State<T> getInitialState() = 0;
-    virtual  bool isGoalState(State<T> s) = 0;
+    virtual bool isGoalState(State<T> s) = 0;
     virtual list<State<T>> getAllPossibleStates(State<T> s) = 0;
 };
 
