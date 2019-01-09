@@ -24,6 +24,15 @@ public:
     bool equals(State<T> other){
         return state == other.getState();
     }
+
+    double getCost(){
+        return cost;
+    }
+
+    State<T> getCameFrom(){
+        return cameFrom;
+    }
+
     T getState(){
         return state;
     }

@@ -18,8 +18,9 @@ S BestFirstSearch::search(ISearchable<T> searchable) {
         for (State s : successors){
             if(!closed.find(s) && !findInOpenList(s))
                 this->openList.push(s);
-            else
-
+            else {
+                if (s)
+            }
                 // Otherwise, if this new path is better than previous one
                 if ()
     }
