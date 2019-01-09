@@ -27,6 +27,7 @@ public:
     };
 
     virtual bool isSaved(P p) {
+        //NEED TO CONVERT P TO STRING AND ITERATE WITH IT OVER MAP OF STRING, STRING
         for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
             if (it->first == p) {
                 return true;
@@ -38,6 +39,7 @@ public:
     virtual S getSolution(P p) {
         for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
             if (it->first == p) {
+                //NEED TO CONVERT STRING SOLUTION TO ACTUAL SOLUTION
                 string temp = it->second+"\r\n";
                 return temp;
             }
@@ -47,6 +49,7 @@ public:
 
     virtual void saveSolution(P p, S s) {
         probSol.insert(pair<P, S>(p, s));
+        //NEED TO USE WTVR METHOD I CHOOSE TO CONVERT P AND S TO STRINGS INSTEAD OF 2 ROWS BELOW
         string prob = p;
         string sol = s;
         sol = sol.substr(0, sol.size()-1);
@@ -88,7 +91,9 @@ public:
                //copying line to sol
                //line>>sol;
                sol = line;
+               //getting enter - might be unnecesarry
                getline(myFile, temp);
+               //NEED TO USE MAP OF STRING, STRING INSTEAD
                probSol.insert(pair<P, S> (prob, sol));
            }
         }
