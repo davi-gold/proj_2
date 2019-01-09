@@ -21,8 +21,8 @@ public:
     State(T st){
         state = st;
     }
-    bool equals(T other){
-        return state == other;
+    bool equals(State<T> other){
+        return state == other.state;
     }
 };
 
