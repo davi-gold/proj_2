@@ -15,6 +15,7 @@ class State {
     T state; // the state represented by a string
     double cost; // cost to reach this state (set by a setter)
     State<T> cameFrom; // the state we came from to this state (setter)
+    double path;
 
 public:
     // CTOR
@@ -31,6 +32,13 @@ public:
 
     void setCameFrom(State<T> cFrom){
         cameFrom = cFrom;
+    }
+    int getCost(){
+        this->cost;
+    }
+
+    int setPath(double p){
+        this->path = p;
     }
 };
 

@@ -11,7 +11,7 @@
 
 template <class T>
 
-class Searchable : public ISearchable {
+class Searchable : public ISearchable<T> {
 public:
     virtual State<T> getInitialState() = 0;
     virtual bool isGoalState(State<T> s) = 0;
