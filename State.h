@@ -29,7 +29,7 @@ public:
         return cost;
     }
 
-    State<T> getCameFrom(){
+    State<T>* getCameFrom(){
         return cameFrom;
     }
 
