@@ -2,30 +2,32 @@
 // Created by david on 1/9/19.
 //
 
+#include <unordered_set>
+#include <bits/unordered_set.h>
 #include "BestFirstSearch.h"
-
+using namespace std;
 template<class P, class S, class T>
 
-S BestFirstSearch::search(ISearchable<T> searchable) {
-    this->openList.push(
-            searchable.getInitialState()); // OPEN = [initial state] ::: a priority queue of states to be evaluated
-    std::unordered_set<State<T>> *closed; // CLOSED = [] ::: a set of states already evaluated
-    while (!openList.empty()) {
-        State<T> n = popOpenList(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
+S BestFirstSearch<P, S, T>::search(ISearchable<T> searchable) {
+    this->openList.push(searchable.getInitialState()); // OPEN = [initial state] ::: a priority queue of states to be evaluated
+    unordered_set<State<T>> *closed; // CLOSED = [] ::: a set of states already evaluated
+    while (!this->openList.empty()) {
+        State<T> n = this->popOpenList(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
         closed->insert(n); // add(n,CLOSED) ::: so we won’t check n again
         if (searchable.isGoalState(n)) // If n is the goal state
-            return backTrace(); // // private method, back traces through the parents, calling the delegated method, returns a list of states with n as a parent
+            return backTrace(n); // // private method, back traces through the parents, calling the delegated method, returns a list of states with n as a parent
         list<State<T>> successors = searchable.getAllPossibleStates(n); // Create n's successors
-        for (State<T> s : successors) {
-            double path = n.getCost() + s.getCost();
-            if (!closed.find(s) && !this->findInOpenList(s)){
-                s.setCameFrom(n);
-                s.setPath(path);
+        for (typename list<State<T>>::iterator it = successors.begin(); it != successors.end(); ++it) {
+            State<T>* s = *it;
+            // generate relevant path
+            double path = n.getCost() + s->getCost();
+            // if it is not in CLOSED and it is not in OPEN
+            if (!closed->find(s) && !this->findInOpenList(s)) {
+                s->setCameFrom(n);
+                s->setPath(path);
                 this->openList.push(s);
-            } else if {
+            } else if (path < s->getCost()){
                 // Otherwise, if this new path is better than previous one
-                (path < s.getCost())
-                {
                     if (!this->findInOpenList(s))
                         this->openList.push(s);
                     else
@@ -34,4 +36,3 @@ S BestFirstSearch::search(ISearchable<T> searchable) {
             }
         }
     }
-}
