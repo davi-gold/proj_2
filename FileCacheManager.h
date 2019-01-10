@@ -40,7 +40,7 @@ public:
         for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
             if (it->first == p) {
                 //NEED TO CONVERT STRING SOLUTION TO ACTUAL SOLUTION
-                string temp = it->second+"\r\n";
+                string temp = it->second;
                 return temp;
             }
         }
