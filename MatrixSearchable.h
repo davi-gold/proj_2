@@ -92,12 +92,38 @@ public:
         }
             //i!=0 beacuse we already checked
         else if(j == 0){
-            //down
-            possibleStates.push_back(myMatrix.at(i-1).at(0));
             //up
+            possibleStates.push_back(myMatrix.at(i-1).at(0));
+            //down
             possibleStates.push_back(myMatrix.at(i+1).at(0));
             //right
             possibleStates.push_back(myMatrix.at(i).at(1));
+        }
+        else if(i == mSize-1){
+            if(j  == mSize-1){
+                //left
+                possibleStates.push_back(myMatrix.at(mSize-1).at(j-1));
+                //up
+                possibleStates.push_back(myMatrix.at(i-1).at(mSize-1));
+            }
+                //j<mSize-1
+            else{
+                //left
+                possibleStates.push_back(myMatrix.at(mSize-1).at(j-1));
+                //right
+                possibleStates.push_back(myMatrix.at(mSize-1).at(j+1));
+                //up
+                possibleStates.push_back(myMatrix.at(i-1).at(j));
+            }
+        }
+            //i!=mSize-1 beacuse we already checked
+        else if(j == mSize-1){
+            //down
+            possibleStates.push_back(myMatrix.at(i+1).at(mSize-1));
+            //up
+            possibleStates.push_back(myMatrix.at(i-1).at(mSize-1));
+            //right
+            possibleStates.push_back(myMatrix.at(i).at(j-1));
         }
         else{
             //left
