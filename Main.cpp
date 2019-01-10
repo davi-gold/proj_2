@@ -25,15 +25,15 @@ int boot::Main::main(int argc, char *argv[]) {
     // calling 'open' function in server
     server->open(atoi(argv[1]), mch);
     while(true){};*/
-    vector<string> myVec;
-    myVec.push_back("1,2,3");
-    myVec.push_back("4,5,6");
-    myVec.push_back("7,8,9");
-    MatrixSearchable matrix = MatrixSearchable(3);
-    matrix.setMatrix(myVec);
-    matrix.setInitialState("1,1");
-    matrix.setGoalState("2,3");
-    list<State<pair<int, int>>> posStaes = matrix.getAllPossibleStates(matrix.getInitialState());
+//    vector<string> myVec;
+//    myVec.push_back("1,2,3");
+//    myVec.push_back("4,5,6");
+//    myVec.push_back("7,8,9");
+//    MatrixSearchable matrix = MatrixSearchable(3);
+//    matrix.setMatrix(myVec);
+//    matrix.setInitialState("1,1");
+//    matrix.setGoalState("2,3");
+//    list<State<pair<int, int>>> posStaes = matrix.getAllPossibleStates(matrix.getInitialState());
 
     return 0;
 }

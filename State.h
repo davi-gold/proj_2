@@ -14,7 +14,7 @@ template <class T>
 class State {
     T state; // the state represented by a string
     double cost; // cost to reach this state (set by a setter)
-    State<T> cameFrom; // the state we came from to this state (setter)
+    State<T>* cameFrom; // the state we came from to this state (setter)
     double path;
 
 public:
@@ -22,6 +22,7 @@ public:
     State(T st, double c){
         state = st;
         cost = c;
+        cameFrom = nullptr;
     }
     bool equals(State<T> other){
         return state == other.getState();
@@ -30,7 +31,7 @@ public:
         return state;
     }
 
-    void setCameFrom(State<T> cFrom){
+    void setCameFrom(State<T>* cFrom){
         cameFrom = cFrom;
     }
     int getCost(){
