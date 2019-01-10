@@ -18,7 +18,7 @@ S BestFirstSearch::search(ISearchable<T> searchable) {
         list<State<T>> successors = searchable.getAllPossibleStates(n); // Create n's successors
         for (State<T> s : successors) {
             double path = n.getCost() + s.getCost();
-            if (!closed.find(s) && !this->findInOpenList(s))
+            if (!closed.find(s) && !this->findInOpenList(s)){
                 s.setCameFrom(n);
                 s.setPath(path);
                 this->openList.push(s);
