@@ -18,14 +18,19 @@ class State {
 
 public:
     // CTOR
-    State(T st){
+    State(T st, double c){
         state = st;
+        cost = c;
     }
     bool equals(State<T> other){
         return state == other.getState();
     }
     T getState(){
         return state;
+    }
+
+    void setCameFrom(State<T> cFrom){
+        cameFrom = cFrom;
     }
 };
 
