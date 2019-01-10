@@ -8,7 +8,7 @@
 
 #include "Searchable.h"
 #include <vector>
-
+#include <bits/valarray_after.h>
 
 
 class MatrixSearchable : public Searchable<pair<int, int>>{
@@ -22,8 +22,9 @@ public:
     virtual bool isGoalState(State<pair<int, int>> s);
     virtual list<State<pair<int, int>>> getAllPossibleStates(State<pair<int, int>> s);
     void setMatrix(vector<string> matList);
-    void setInitialState(string inI, string inJ);
-    void setGoalState(string inI, string inJ);
+    void setInitialState(string index);
+    void setGoalState(string index);
+
 };
 
 

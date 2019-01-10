@@ -30,17 +30,72 @@ void MatrixSearchable::setMatrix(vector<string> matList) {
     }
 }
 
-void MatrixSearchable::setInitialState(string inI, string inJ) {
-    int i = atoi(inI.c_str());
-    int j = atoi(inJ.c_str());
+void MatrixSearchable::setInitialState(string index) {
+    unsigned long int comma = index.find(',');
+    string iStr = index.substr(0, comma);
+    string jStr = index.substr(comma + 1, index.size());
+    int i = atoi(iStr.c_str());
+    int j = atoi(jStr.c_str());
 
     initialState = myMatrix.at(i).at(j);
 }
 
 
-void MatrixSearchable::setGoalState(string inI, string inJ) {
-    int i = atoi(inI.c_str());
-    int j = atoi(inJ.c_str());
+void MatrixSearchable::setGoalState(string index) {
+    unsigned long int comma = index.find(',');
+    string iStr = index.substr(0, comma);
+    string jStr = index.substr(comma + 1, index.size());
+    int i = atoi(iStr.c_str());
+    int j = atoi(jStr.c_str());
 
     goalState = myMatrix.at(i).at(j);
+}
+
+State<pair<int, int>> MatrixSearchable:: getInitialState(){
+    return initialState;
+}
+bool MatrixSearchable:: isGoalState(State<pair<int, int>> s){
+    return s == goalState;
+}
+list<State<pair<int, int>>> MatrixSearchable:: getAllPossibleStates(State<pair<int, int>> s){
+    list<State<pair<int, int>>> possibleStates;
+    int i = s.getState().first;
+    int j = s.getState().second;
+
+    if(i == 0){
+        if(j  == 0){
+            possibleStates.push_back(myMatrix.at(0).at(1));
+            possibleStates.push_back(myMatrix.at(1).at(0));
+        }
+        //j>0
+        else{
+            //left
+            possibleStates.push_back(myMatrix.at(0).at(j-1));
+            //right
+            possibleStates.push_back(myMatrix.at(0).at(j+1));
+            //down
+            possibleStates.push_back(myMatrix.at(1).at(j));
+        }
+    }
+    //i!=0 beacuse we already checked
+    else if(j == 0){
+        //down
+        possibleStates.push_back(myMatrix.at(i-1).at(0));
+        //up
+        possibleStates.push_back(myMatrix.at(i+1).at(0));
+        //right
+        possibleStates.push_back(myMatrix.at(i).at(1));
+    }
+    else{
+        //left
+        possibleStates.push_back(myMatrix.at(i).at(j-1));
+        //right
+        possibleStates.push_back(myMatrix.at(i).at(j+1));
+        //up
+        possibleStates.push_back(myMatrix.at(i-1).at(j));
+        //down
+        possibleStates.push_back(myMatrix.at(i+1).at(j));
+    }
+
+    return possibleStates;
 }
