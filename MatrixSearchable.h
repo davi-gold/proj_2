@@ -23,22 +23,32 @@ public:
 
 //sets myMatrix
     void setMatrix(vector<string> matList) {
-        unsigned long int i = 0;
-        unsigned long int j = 0;
+        for(int k = 0;k<mSize;k++){
+            vector<State<Point>*> cur_vec;
+            myMatrix.push_back(cur_vec);
+        }
         string row;
-        for (i; i < mSize; i++) {
+        for (unsigned long int i = 0; i < mSize; i++) {
+            unsigned long int rowCounter = 0;
+            unsigned long int comma = 0;
             row = matList.at(i);
             string strVal;
             double val;
-            int rIndex = 0;
-            for (j; j < mSize; j++) {
-                j = row.find(',');
-                strVal = row.substr(rIndex, j);
-                rIndex = j + 1;
+            for (unsigned long int j = 0; j < mSize; j++) {
+                if(rowCounter == mSize-1){
+                    strVal = row;
+                }else{
+                    comma = row.find(',');
+                    strVal = row.substr(0, comma);
+                    row = row.substr(comma+1, row.size());
+                    rowCounter++;
+                }
                 val = atoi(strVal.c_str());
+                //index i, j-1 becuase j will run from 1 and not from zero(j is according to commas)
                 State<Point>* curState = new State<Point>(Point(i, j), val);
                 //curstate should be in index i,j beacuse for each row we will do pushback j times
                 myMatrix.at(i).push_back(curState);
+
             }
         }
     }
@@ -47,8 +57,8 @@ public:
         unsigned long int comma = index.find(',');
         string iStr = index.substr(0, comma);
         string jStr = index.substr(comma + 1, index.size());
-        int i = atoi(iStr.c_str());
-        int j = atoi(jStr.c_str());
+        int i = stoi(iStr.c_str());
+        int j = stoi(jStr.c_str());
 
         initialState = myMatrix.at(i).at(j);
     }
