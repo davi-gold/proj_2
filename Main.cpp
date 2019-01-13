@@ -1,14 +1,11 @@
 #include <iostream>
 #include "MySerialServer.h"
 #include "FileCacheManager.h"
-#include "MyTestClientHandler.h"
-#include "StringReverser.h"
 #include "Main.h"
 #include "Searcher.h"
-#include "Searchable.h"
 #include "MatrixSearchable.h"
 
-#include <vector>
+
 using Point =std::pair<int,int>;
 
 int boot::Main::main(int argc, char *argv[]) {
@@ -34,7 +31,7 @@ int boot::Main::main(int argc, char *argv[]) {
     matrix.setMatrix(myVec);
     matrix.setInitialState("1,1");
     matrix.setGoalState("1,2");
-    list<State<Point>*> posStaes = matrix.getAllPossibleStates(matrix.getInitialState());
+
 
     return 0;
 }

@@ -11,7 +11,8 @@
 #include <vector>
 //#include <bits/valarray_after.h>
 
-using Point =std::pair<int, int>;
+using Point = std::pair<int, int>;
+
 
 class MatrixSearchable : public Searchable<Point>, Stringable {
     int mSize;

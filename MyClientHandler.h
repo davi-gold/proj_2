@@ -14,6 +14,8 @@
 #include "MatrixSearchable.h"
 #include "MatrixSolver.h"
 
+using Point =std::pair<int,int>;
+
 class MyClientHandler : public ClientHandler {
 
     Solver<MatrixSearchable, vector<State<Point>*>> *solver;
