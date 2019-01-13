@@ -63,8 +63,6 @@ void MyParallelServer::listenToClient(int sockfd, struct sockaddr_in address, in
         std::thread t2([&]() {
             if (flag) { // only if ACCEPT succeeded --> call 'handleClient'
                 c->handleClient(new_socket);
-                cout << "Closing inner socket..." << endl;
-                close(new_socket);
             }
             clientCounter--;
         });
