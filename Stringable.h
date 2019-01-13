@@ -10,12 +10,11 @@
 
 using namespace std;
 
-template <class T>
 
 class Stringable{
-    string convertToString();
+    vector<string> convertToString();
 
-    T convertFromString(string fromString);
+    void convertFromString(vector<string> fromString);
 };
 
 #endif //PROJ_2_STRINGABLE_H

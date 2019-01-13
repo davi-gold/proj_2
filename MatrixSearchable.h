@@ -7,24 +7,35 @@
 
 
 #include "Searchable.h"
+#include "Stringable.h"
 #include <vector>
 //#include <bits/valarray_after.h>
 
-using Point =std::pair<int,int>;
-class MatrixSearchable : public Searchable<Point>{
+using Point =std::pair<int, int>;
+
+class MatrixSearchable : public Searchable<Point>, Stringable {
     int mSize;
-    vector<vector<State<Point>*>> myMatrix;
-    State<Point>* initialState;
-    State<Point>* goalState;
+    vector<vector<State<Point> *>> myMatrix;
+    State<Point> *initialState;
+    State<Point> *goalState;
 public:
     MatrixSearchable(int size) {
         mSize = size;
     }
 
+    MatrixSearchable() {
+
+    }
+
+    //sets size
+    void setSize(string size) {
+        mSize = stoi(size.c_str());
+    }
+
 //sets myMatrix
     void setMatrix(vector<string> matList) {
-        for(int k = 0;k<mSize;k++){
-            vector<State<Point>*> cur_vec;
+        for (int k = 0; k < mSize; k++) {
+            vector<State<Point> *> cur_vec;
             myMatrix.push_back(cur_vec);
         }
         string row;
@@ -35,17 +46,17 @@ public:
             string strVal;
             double val;
             for (unsigned long int j = 0; j < mSize; j++) {
-                if(rowCounter == mSize-1){
+                if (rowCounter == mSize - 1) {
                     strVal = row;
-                }else{
+                } else {
                     comma = row.find(',');
                     strVal = row.substr(0, comma);
-                    row = row.substr(comma+1, row.size());
+                    row = row.substr(comma + 1, row.size());
                     rowCounter++;
                 }
                 val = atoi(strVal.c_str());
                 //index i, j-1 becuase j will run from 1 and not from zero(j is according to commas)
-                State<Point>* curState = new State<Point>(Point(i, j), val);
+                State<Point> *curState = new State<Point>(Point(i, j), val);
                 //curstate should be in index i,j beacuse for each row we will do pushback j times
                 myMatrix.at(i).push_back(curState);
 
@@ -74,81 +85,126 @@ public:
         goalState = myMatrix.at(i).at(j);
     }
 
-    State<Point>* getInitialState(){
+    State<Point> *getInitialState() {
         return initialState;
     }
-    bool isGoalState(State<Point>* s){
+
+    bool isGoalState(State<Point> *s) {
         return s == goalState;
     }
-    list<State<Point>*> getAllPossibleStates(State<Point>* s){
-        list<State<Point>*> possibleStates;
+
+    list<State<Point> *> getAllPossibleStates(State<Point> *s) {
+        list<State<Point> *> possibleStates;
         int i = s->getState().first;
         int j = s->getState().second;
 
-        if(i == 0){
-            if(j  == 0){
+        if (i == 0) {
+            if (j == 0) {
                 possibleStates.push_back(myMatrix.at(0).at(1));
                 possibleStates.push_back(myMatrix.at(1).at(0));
             }
                 //j>0
-            else{
+            else {
                 //left
-                possibleStates.push_back(myMatrix.at(0).at(j-1));
+                possibleStates.push_back(myMatrix.at(0).at(j - 1));
                 //right
-                possibleStates.push_back(myMatrix.at(0).at(j+1));
+                possibleStates.push_back(myMatrix.at(0).at(j + 1));
                 //down
                 possibleStates.push_back(myMatrix.at(1).at(j));
             }
         }
             //i!=0 beacuse we already checked
-        else if(j == 0){
+        else if (j == 0) {
             //up
-            possibleStates.push_back(myMatrix.at(i-1).at(0));
+            possibleStates.push_back(myMatrix.at(i - 1).at(0));
             //down
-            possibleStates.push_back(myMatrix.at(i+1).at(0));
+            possibleStates.push_back(myMatrix.at(i + 1).at(0));
             //right
             possibleStates.push_back(myMatrix.at(i).at(1));
-        }
-        else if(i == mSize-1){
-            if(j  == mSize-1){
+        } else if (i == mSize - 1) {
+            if (j == mSize - 1) {
                 //left
-                possibleStates.push_back(myMatrix.at(mSize-1).at(j-1));
+                possibleStates.push_back(myMatrix.at(mSize - 1).at(j - 1));
                 //up
-                possibleStates.push_back(myMatrix.at(i-1).at(mSize-1));
+                possibleStates.push_back(myMatrix.at(i - 1).at(mSize - 1));
             }
                 //j<mSize-1
-            else{
+            else {
                 //left
-                possibleStates.push_back(myMatrix.at(mSize-1).at(j-1));
+                possibleStates.push_back(myMatrix.at(mSize - 1).at(j - 1));
                 //right
-                possibleStates.push_back(myMatrix.at(mSize-1).at(j+1));
+                possibleStates.push_back(myMatrix.at(mSize - 1).at(j + 1));
                 //up
-                possibleStates.push_back(myMatrix.at(i-1).at(j));
+                possibleStates.push_back(myMatrix.at(i - 1).at(j));
             }
         }
             //i!=mSize-1 beacuse we already checked
-        else if(j == mSize-1){
+        else if (j == mSize - 1) {
             //down
-            possibleStates.push_back(myMatrix.at(i+1).at(mSize-1));
+            possibleStates.push_back(myMatrix.at(i + 1).at(mSize - 1));
             //up
-            possibleStates.push_back(myMatrix.at(i-1).at(mSize-1));
+            possibleStates.push_back(myMatrix.at(i - 1).at(mSize - 1));
             //right
-            possibleStates.push_back(myMatrix.at(i).at(j-1));
-        }
-        else{
+            possibleStates.push_back(myMatrix.at(i).at(j - 1));
+        } else {
             //left
-            possibleStates.push_back(myMatrix.at(i).at(j-1));
+            possibleStates.push_back(myMatrix.at(i).at(j - 1));
             //right
-            possibleStates.push_back(myMatrix.at(i).at(j+1));
+            possibleStates.push_back(myMatrix.at(i).at(j + 1));
             //up
-            possibleStates.push_back(myMatrix.at(i-1).at(j));
+            possibleStates.push_back(myMatrix.at(i - 1).at(j));
             //down
-            possibleStates.push_back(myMatrix.at(i+1).at(j));
+            possibleStates.push_back(myMatrix.at(i + 1).at(j));
         }
 
         return possibleStates;
     }
 
+    vector<string> convertToString() {
+        vector<string> matrixString;
+        string size = to_string(mSize);
+        matrixString.push_back(size);
+        string iState = to_string(initialState->getState().first) + ","
+                        + to_string(initialState->getState().second);
+        matrixString.push_back(iState);
+        string gState = to_string(goalState->getState().first) + ","
+                        + to_string(goalState->getState().second);
+        matrixString.push_back(gState);
+        for (int i = 0; i < mSize; i++) {
+            string rowOfPoints = {};
+            for (int j = 0; j < mSize; j++) {
+                string pointString;
+                State<Point> *point = myMatrix.at(i).at(j);
+                pointString = to_string(point->getCost());
+                rowOfPoints.append(pointString);
+            }
+            matrixString.push_back(rowOfPoints);
+        }
+
+        return matrixString;
+    }
+
+    void convertFromString(vector<string> fromString) {
+        string sizeString = fromString.front();
+        fromString.pop_back();
+        string iState = fromString.front();
+        fromString.pop_back();
+        string gState = fromString.front();
+        fromString.pop_back();
+        vector<string> matString = fromString;
+        //setting size
+        setSize(sizeString);
+
+        //setting initial state
+        setInitialState(iState);
+
+        //setting goal state
+        setGoalState(gState);
+
+        //setting matrix
+        setMatrix(matString);
+
+    }
 
 };
 
