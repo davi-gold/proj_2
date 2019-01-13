@@ -41,6 +41,7 @@ public:
             if (it->first == p) {
                 //NEED TO CONVERT STRING SOLUTION TO ACTUAL SOLUTION
                 string temp = it->second;
+                temp.push_back('\n');
                 return temp;
             }
         }
