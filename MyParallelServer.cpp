@@ -39,7 +39,6 @@ void MyParallelServer::listenToClient(int sockfd, struct sockaddr_in address, in
         // using lambda function - t1 => new thread
         std::thread t1([&]() {
             new_socket = accept(sockfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
-
             if (new_socket < 0) { // if ACCEPT fails
                 perror("error");
                 exit(EXIT_FAILURE);
@@ -62,8 +61,11 @@ void MyParallelServer::listenToClient(int sockfd, struct sockaddr_in address, in
         }
         clientCounter++;
         std::thread t2([&]() {
-            if (flag) // only if ACCEPT succeeded --> call 'handleClient'
+            if (flag) { // only if ACCEPT succeeded --> call 'handleClient'
                 c->handleClient(new_socket);
+                cout << "Closing inner socket..." << endl;
+                close(new_socket);
+            }
             clientCounter--;
         });
         t2.detach();
