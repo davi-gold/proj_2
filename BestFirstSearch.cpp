@@ -15,13 +15,14 @@ S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
     searchable->getInitialState()->setVisited(true);
     unordered_set<State<T> *> *closed; // CLOSED = [] ::: a set of states already evaluated
     vector<State<T> *> pVec;
-    while (!this->openList.empty()) {
+    bool flag = true;
+    while (!this->openList.empty() && flag == true) {
         State<T> *n = this->popOpenList(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
         closed->insert(n); // add(n,CLOSED) ::: so we won’t check n again
 
         if (searchable->isGoalState(n)) { // If n is the goal state
             pVec = searchable->backTrace(); // back traces through the parents, calling the delegated method, returns a list of states with n as a parent
-            break;
+            flag = false;
         }
 
         this->evaluatedNodes++;
@@ -45,8 +46,10 @@ S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
             }
         }
     }
-    if (pVec != NULL)
-        return searchable->getDirections(pVec);
-    else
-        return perror("The path vector is NULL!\n");
+    if (pVec != NULL) {
+        if (!pVec.empty())
+            return searchable->getDirections(pVec);
+        else
+            return perror("path is empty!\n");
+    } else return perror("path is NULL!\n");
 }

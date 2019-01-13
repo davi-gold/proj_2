@@ -13,7 +13,7 @@ template<class P, class S, class T>
 
 class Searcher : public ISearcher<P, S, T> {
 protected:
-    priority_queue<State<T>> openList;
+    priority_queue<State<T>*> openList;
     int evaluatedNodes;
 
     virtual State<T> popOpenList() {
