@@ -54,7 +54,7 @@ public:
                     row = row.substr(comma + 1, row.size());
                     rowCounter++;
                 }
-                val = atoi(strVal.c_str());
+                val = stoi(strVal.c_str());
                 //index i, j-1 becuase j will run from 1 and not from zero(j is according to commas)
                 State<Point> *curState = new State<Point>(Point(i, j), val);
                 //curstate should be in index i,j beacuse for each row we will do pushback j times
@@ -85,15 +85,15 @@ public:
         goalState = myMatrix.at(i).at(j);
     }
 
-    State<Point> *getInitialState() {
+    virtual State<Point> *getInitialState() {
         return initialState;
     }
 
-    bool isGoalState(State<Point> *s) {
+    virtual bool isGoalState(State<Point> *s) {
         return s == goalState;
     }
 
-    list<State<Point> *> getAllPossibleStates(State<Point> *s) {
+    virtual list<State<Point> *> getAllPossibleStates(State<Point> *s) {
         list<State<Point> *> possibleStates;
         int i = s->getState().first;
         int j = s->getState().second;
@@ -206,6 +206,33 @@ public:
 
     }
 
+    virtual vector<string> getDirections(vector<State<Point> *> statesVec) {
+        vector<string> directions;
+        for (int k = 0; k < statesVec.size() - 1; k++) {
+            int i1 = statesVec[k]->getState().first;
+            int j1 = statesVec[k]->getState().second;
+            int i2 = statesVec[k]->getState().first;
+            int j2 = statesVec[k]->getState().second;
+            string direc;
+            //cannot be a combination of two because there is no diagonal
+            if (i1 < i2) {
+                direc = "down-";
+            } else if (i1 > i2) {
+                direc = "up-";
+            }
+            else if(j1<j2){
+                direc = "right-";
+            }
+            else if(j1>j2){
+                direc = "left-";
+            }
+            if(k+1 == statesVec.size()-1){
+                //removing "-" in the last direction
+                direc = direc.substr(0, direc.size()-1);
+            }
+        }
+        return directions;
+    }
 };
 
 
