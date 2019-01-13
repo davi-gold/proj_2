@@ -12,9 +12,9 @@ using namespace std;
 
 
 class Stringable{
-    vector<string> convertToString();
+    virtual vector<string> convertToString() = 0;
 
-    void convertFromString(vector<string> fromString);
+    virtual void convertFromString(vector<string> fromString) = 0;
 };
 
 #endif //PROJ_2_STRINGABLE_H

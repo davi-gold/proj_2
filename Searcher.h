@@ -16,14 +16,16 @@ protected:
     priority_queue<State<T>*> openList;
     int evaluatedNodes;
 
-    virtual State<T> popOpenList() {
+    virtual State<T>* popOpenList() {
         evaluatedNodes++;
-        return openList.top();
+        State<T>* temp = openList.top();
+        openList.pop();
+        return temp;
     };
 
 public:
     Searcher() {
-        openList = new priority_queue<State<T>>();
+        openList = priority_queue<State<T>*>();
         evaluatedNodes = 0;
     };
 
@@ -68,7 +70,7 @@ public:
             this->openList.push(tVec[i]);
     }
 
-    virtual S search(Searchable<T> *searchable);
+    virtual S search(ISearchable<T> *searchable) = 0;
 };
 
 

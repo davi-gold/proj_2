@@ -2,7 +2,7 @@
 #include "MySerialServer.h"
 #include "FileCacheManager.h"
 #include "Main.h"
-#include "Searcher.h"
+//#include "Searcher.h"
 #include "MatrixSearchable.h"
 #include "BestFirstSearch.h"
 
@@ -34,7 +34,7 @@ int boot::Main::main(int argc, char *argv[]) {
     matrix.setGoalState("1,2");
 
     ISearcher<MatrixSearchable, vector<string>, Point> *bestS =
-            new BestFirstSearch<MatrixSearchable, vector<string>, Point>();
+        new BestFirstSearch<MatrixSearchable, vector<string>, Point>();
 
     //Searchable<Point> *mat = new MatrixSearchable();
 

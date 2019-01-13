@@ -6,7 +6,8 @@
 #define PROJ_2_ISEARCHABLE_H
 
 
-#include "Searchable.h"
+#include <vector>
+#include <list>
 #include "State.h"
 
 template <class T>

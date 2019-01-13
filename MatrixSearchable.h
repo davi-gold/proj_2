@@ -6,7 +6,7 @@
 #define PROJ_2_MATRIXSEARCHABLE_H
 
 
-#include "Searchable.h"
+#include "ISearchable.h"
 #include "Stringable.h"
 #include <vector>
 //#include <bits/valarray_after.h>
@@ -14,7 +14,7 @@
 using Point = std::pair<int, int>;
 
 
-class MatrixSearchable : public Searchable<Point>, Stringable {
+class MatrixSearchable : public ISearchable<Point>, Stringable {
     int mSize;
     vector<vector<State<Point> *>> myMatrix;
     State<Point> *initialState;

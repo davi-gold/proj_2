@@ -5,8 +5,6 @@
 #ifndef PROJ_2_SOLVER_H
 #define PROJ_2_SOLVER_H
 
-#include "Solution.h"
-#include "Problem.h"
 
 template <class P, class S>
 
