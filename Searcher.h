@@ -27,10 +27,10 @@ public:
         evaluatedNodes = 0;
     };
 
-    bool findInOpenList(State<T> s) {
-        priority_queue<State<T>> openListCpy = this->openList;
+    bool findInOpenList(State<T>* s) {
+        priority_queue<State<T>*> openListCpy = this->openList;
         while (!openListCpy.empty()) {
-            if (s.equals(std::move(const_cast<int &>(openListCpy.top())))) {
+            if (s->equals(std::move(const_cast<int &>(openListCpy.top())))) {
                 return true;
             }
             openListCpy.pop();

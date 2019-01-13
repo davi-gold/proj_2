@@ -6,6 +6,9 @@
 #define PROJ_2_MATRIXCLIENTHANDLER_H
 
 
+#include <sys/socket.h>
+#include <unistd.h>
+#include <cstring>
 #include "ClientHandler.h"
 #include "CacheManager.h"
 #include "MatrixSearchable.h"
@@ -35,14 +38,15 @@ public:
             if (messageLength > 0) {
                 // iterate over the buffer to find end of line
                 for (int i = 0; i < messageLength; i++) {
+                    if (problemTemp == "end") {
+                        switchFlag = false;
+                    }
                     // as long as it is not end of line -> update the string
-                    if (buffer[i] != '\r' && buffer[i + 1] != '\n') {
+                    else if (buffer[i] != '\r' && buffer[i + 1] != '\n') {
 
                         problemTemp += buffer[i];
                         //client finished entering message
-                    } else if (problemTemp == "end") {
-                        switchFlag = false;
-                    } else {
+                    }  else {
                         // if it is end of line and problem is not empty -> update the final string
                         if (problemTemp.length() > 0) {
                             // copy content from problemTemp to problemFinal
@@ -71,7 +75,23 @@ public:
     }
 
     virtual void handleClient(int socket) override {
-
+        bool finish = false;
+        string end = "end";
+        vector<string> fromClient;
+        while (!finish) {
+            fromClient = readFromSocket(socket);
+            if (this->cm->isSaved(fromClient)) {
+                string sol = this->cm->getSolution(fromClient);
+                // send the solution to client
+                const char *fromClientChar = sol.c_str(); // convert the string to char *
+                send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
+            } else {
+                string solution = this->solver->solve(fromClient); // solve the problem
+                this->cm->saveSolution(fromClient, solution); // save the solution
+                const char *solutionChar = solution.c_str(); // convert the string to char *
+                send(socket, solutionChar, strlen(solutionChar), 0); // write to client
+            }
+        } close(socket);
     }
 };
 
