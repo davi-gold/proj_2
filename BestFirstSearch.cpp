@@ -27,7 +27,7 @@ S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
 
         this->evaluatedNodes++;
         list<State<T> *> successors = searchable->getAllPossibleStates(n); // Create n's successors
-        for (typename list<State<T>>::iterator it = successors.begin(); it != successors.end(); ++it) {
+        for (typename list<State<T>*>::iterator it = successors.begin(); it != successors.end(); ++it) {
             State<T> *s = *it;
             // generate relevant path
             double thisPath = n->getCostPath() + s->getCost();
