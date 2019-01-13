@@ -30,6 +30,7 @@ S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
             State<T> *s = *it;
             // generate relevant path
             double thisPath = n->getCostPath() + s->getCost();
+
             // if it is not in CLOSED and it is not in OPEN
             if (!closed->find(s) && !this->findInOpenList(s)) {
                 s->setCameFrom(n);
