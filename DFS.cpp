@@ -25,16 +25,18 @@ S DFS<P, S, T>::search(ISearchable<T> *searchable) {
         this->evaluatedNodes++;
         if (searchable->isGoalState(s->getState()))
             flag = false;
-        if (s->getVisit() == false)
-            s->setVisited(true);
+        if (flag) {
+            if (s->getVisit() == false)
+                s->setVisited(true);
 
-        list<State<T> *> possibleMoves = searchable->getAllPossibleStates(s);
-        typename list<State<T> *>::iterator iterator;
+            list<State<T> *> successors = searchable->getAllPossibleStates(s);
+            typename list<State<T> *>::iterator iterator;
 
-        for (iterator = possibleMoves.begin(); iterator != possibleMoves.end(); ++iterator) {
-            State<T> *t = *iterator;
-            t->setCameFrom(s);
-            pStack.push(t);
+            for (iterator = successors.begin(); iterator != successors.end(); ++iterator) {
+                State<T> *t = *iterator;
+                t->setCameFrom(s);
+                pStack.push(t);
+            }
         }
     }
     vector<State<T> *> pVec = searchable->backTrace(s);
