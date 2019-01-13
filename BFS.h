@@ -11,7 +11,7 @@
 template<class P, class S, class T>
 
 class BFS : public Searcher <P, S, T> {
-    S search(ISearchable<T> *searchable) override;
+    S search(ISearchable<T> *searchable);
 };
 
 #endif //PROJ_2_BFS_H
