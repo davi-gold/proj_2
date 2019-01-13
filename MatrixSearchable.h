@@ -160,6 +160,19 @@ public:
         return possibleStates;
     }
 
+    virtual vector<string> getDirections(vector<State<vector<int>>*> p){
+        vector<string> d; // directions
+        for (int i = 0; i < p.size() - 1; i++){
+            vector<int> thisState = p[i]->getState();
+            vector<int> nextState = p[i + 1]->getState();
+
+            if()
+
+
+
+        }
+    }
+
     vector<string> convertToString() {
         vector<string> matrixString;
         string size = to_string(mSize);

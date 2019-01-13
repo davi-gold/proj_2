@@ -6,6 +6,4 @@
 using namespace std;
 template<class P, class S, class T>
 
-S BFS<P, S, T>::search(ISearchable<T> searchable) {
-
 }

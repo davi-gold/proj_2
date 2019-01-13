@@ -17,7 +17,7 @@ protected:
 public:
     virtual int OpenListSize() = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
-    virtual S search(Searchable<T> searchable) = 0;
+    virtual S search(Searchable<T> *searchable) = 0;
 };
 
 #endif //PROJ_2_ISEARCHER_H

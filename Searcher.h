@@ -52,35 +52,23 @@ public:
     };
 
 
-    vector<State<T> *> backTrace(State<T> *goalState) {
-        vector<State<T> *> path;
-        path.push_back(goalState);
 
-        while (goalState->getCamefrom() != NULL) {
-            State<T> *parent = goalState->getCamefrom();
-            path.push_back(parent);
-            goalState = parent;
-        }
-
-        reverse(path.begin(), path.end());
-        return path;
-    }
-
-
-    void updatePrior(State<T> *state) {
-        vector<State<T>> tVec;
+    void updatePrior(State<T> *oldOne, State<T> *newOne) {
+        vector<State<T>*> tVec;
         while (!this->openList.empty()) {
-            State<T> changedState = this->popFromthePq();
-            if (changedState.equals(state))
-                tVec.push_back(state);
-            else
-                tVec.push_back(changedState);
+            State<T>* changedState = this->popFromthePq();
+            tVec.push_back(changedState);
+            if (oldOne->equals(newOne)){
+                changedState->setCameFrom(newOne);
+                changedState->setCostPath(newOne->getCostPath() + oldOne->getCost());
+                break;
+            }
         }
         for (int i = 0; i < tVec.size(); i++)
             this->openList.push(tVec[i]);
     }
 
-    virtual S search(Searchable<T> searchable);
+    virtual S search(Searchable<T> *searchable);
 };
 
 
