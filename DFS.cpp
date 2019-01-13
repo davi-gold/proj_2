@@ -45,4 +45,3 @@ S DFS<P, S, T>::search(ISearchable<T> *searchable) {
             return searchable->getDirections(pVec);
         else return perror("path is empty!\n");
     } else return perror("path is NULL!\n");
-}
