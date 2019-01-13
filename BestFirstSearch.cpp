@@ -11,8 +11,7 @@ using namespace std;
 template<class P, class S, class T>
 
 S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
-    this->openList.push(
-            searchable->getInitialState()); // OPEN = [initial state] ::: a priority queue of states to be evaluated
+    this->openList.push(searchable->getInitialState()); // OPEN = [initial state] ::: a priority queue of states to be evaluated
     searchable->getInitialState()->setVisited(true);
     unordered_set<State<T> *> *closed; // CLOSED = [] ::: a set of states already evaluated
     vector<State<T> *> pVec;

@@ -160,7 +160,7 @@ public:
         return possibleStates;
     }
 
-    virtual vector<string> getDirections(vector<State<vector<int>>*> p){
+    virtual vector<string> getDirections(vector<Point>* p){
         vector<string> d; // directions
         for (int i = 0; i < p.size() - 1; i++){
             vector<int> thisState = p[i]->getState();
