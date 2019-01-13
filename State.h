@@ -27,6 +27,9 @@ public:
         cameFrom = nullptr;
     }
 
+    bool getVisit() {
+        return this->visited;
+    }
     T getState(){
         return state;
     }
