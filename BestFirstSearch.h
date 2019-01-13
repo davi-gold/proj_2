@@ -12,7 +12,7 @@ template<class P, class S, class T>
 
 class BestFirstSearch : public Searcher <P, S, T>{
 public:
-     S search(ISearchable<T> *searchable) override;
+     virtual S search(ISearchable<T> *searchable);
 };
 
 
