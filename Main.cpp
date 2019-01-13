@@ -30,11 +30,11 @@ int boot::Main::main(int argc, char *argv[]) {
     myVec.push_back("1,2,3");
     myVec.push_back("4,5,6");
     myVec.push_back("7,8,9");
-    MatrixSearchable matrix = MatrixSearchable(3);
-    matrix.setMatrix(myVec);
-    matrix.setInitialState("1,1");
-    matrix.setGoalState("1,2");
-    list<State<Point>*> posStaes = matrix.getAllPossibleStates(matrix.getInitialState());
+//    ISearchable<> *matrix = new MatrixSearchable(3);
+//    matrix->setMatrix(myVec);
+//    matrix->setInitialState("1,1");
+//    matrix->setGoalState("1,2");
+//    list<State<Point>*> posStaes = matrix->getAllPossibleStates(matrix->setInitialState("3"));
 
     return 0;
 }
