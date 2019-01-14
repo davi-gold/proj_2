@@ -11,11 +11,16 @@
 template<class S, class T>
 class Astar : public Searcher<S, T> {
     S search(ISearchable<T> *searchable) {
-        this->openList.push(searchable->getInitialState()); // Add the start node
+        unordered_set < State<T> * > *closed;
+        State<T> *s = searchable->getInitialState();
+        s->setCameFrom(NULL);
+        this->openList->push(s); // Add the start node
+        searchable->getInitialState()->setVisited(true);
         bool flag = true;
-        while (!this->openList.getQueue().empty() && flag == true) {
-            State<T> *n = this->openList.popAndGet();
+        while (!this->openList->getQueue().empty() && flag == true) {
+            State<T> *n = this->openList->popAndGet();
             this->evalNodes++;
+
 
         }
     }
