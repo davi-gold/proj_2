@@ -10,7 +10,15 @@
 
 template<class S, class T>
 class Astar : public Searcher<S, T> {
-    S search(ISearchable<T> *searchable);
+    S search(ISearchable<T> *searchable) {
+        this->openList.push(searchable->getInitialState()); // Add the start node
+        bool flag = true;
+        while (!this->openList.getQueue().empty() && flag == true) {
+            State<T> *n = this->openList.popAndGet();
+            this->evalNodes++;
+
+        }
+    }
 };
 
 
