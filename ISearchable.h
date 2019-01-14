@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <list>
+#include <algorithm>
 #include "State.h"
 
 using namespace std;
