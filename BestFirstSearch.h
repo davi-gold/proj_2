@@ -26,19 +26,22 @@ public:
              closed->insert(n); // add(n,CLOSED) ::: so we won’t check n again
 
              if (searchable->isGoalState(n)) { // If n is the goal state
-                 pVec = searchable->backTrace(); // back traces through the parents, calling the delegated method, returns a list of states with n as a parent
+                 //*pVec = searchable->backTrace();
+                 pVec = searchable->backTrace(n); // back traces through the parents, calling the delegated method, returns a list of states with n as a parent
                  flag = false;
              }
              if (flag) {
-                 this->evaluatedNodes++;
+                 int evalNodes = this->getNumOfNodesEval();
+                 evalNodes++;
+                 this->setEvaluatedNodes(evalNodes);
                  list<State<T> *> successors = searchable->getAllPossibleStates(n); // Create n's successors
-                 for (typename list<State<T>>::iterator it = successors.begin(); it != successors.end(); ++it) {
+                 for (typename list<State<T>*>::iterator it = successors.begin(); it != successors.end(); ++it) {
                      State<T> *s = *it;
                      // generate relevant path
                      double thisPath = n->getCostPath() + s->getCost();
 
                      // if it is not in CLOSED and it is not in OPEN
-                     if (!closed->find(s) && !this->findInOpenList(s)) {
+                     if (!closed->find(s) && !this->openList->find(s)) {
                          s->setCameFrom(n);
                          s->setCostPath(thisPath);
                          this->openList.push(s);

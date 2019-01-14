@@ -40,8 +40,8 @@ public:
         cameFrom = cFrom;
     }
 
-    int getCost() {
-        this->cost;
+    double getCost() {
+        return this->cost;
     }
 
     void setPath(double p) {
