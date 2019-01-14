@@ -38,6 +38,5 @@ int boot::Main::main(int argc, char *argv[]) {
     Searcher<string, Point> *srch = new BestFirstSearch<string, Point>();
     string sol = srch->search(matrix);
 
-
     return 0;
 }
