@@ -7,16 +7,13 @@
 
 #include "ISearchable.h"
 #include "State.h"
+#include "MyPriorityQueue.h"
 
 template <class S, class T>
 
 class ISearcher {
-protected:
-    virtual State<T>* popOpenList() = 0;
 
 public:
-    virtual int OpenListSize() = 0;
-    virtual int getNumberOfNodesEvaluated() = 0;
     virtual S search(ISearchable<T> *searchable) = 0;
 };
 

@@ -19,15 +19,16 @@ S BFS<S, T>::search(ISearchable<T> *searchable) {
     searchable->getInitialState()->setVisited(true);
     bool flag = true;
 
-    while (!this->openList.empty() && flag == true) { // while openList is not empty
-        State<T> *n = this->popOpenList();
+    while (!this->openList.getQueue().empty() && flag == true) { // while openList is not empty
+        State<T> *n = this->openList.pop();
+        this->evalNodes++;
         if (searchable->isGoalState(n)) {
             closed->insert(n);
             pVec = searchable->backTrace(n);
             flag = false;
         }
         if (flag) {
-            this->evaluatedNodes++;
+            this->evalNodes++;
             list<State<T> *> successors = searchable->getAllPossibleStates(n); // Create n's successors
             for (typename list<State<T>>::iterator it = successors.begin(); it != successors.end(); ++it) {
                 State<T> *s = *it;
