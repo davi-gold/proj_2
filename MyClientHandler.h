@@ -14,15 +14,15 @@
 #include "MatrixSearchable.h"
 #include "MatrixSolver.h"
 
-using Point =std::pair<int,int>;
+using Point =std::pair<int, int>;
 
 class MyClientHandler : public ClientHandler {
 
-    Solver<MatrixSearchable, vector<State<Point>*>> *solver;
-    CacheManager<MatrixSearchable, vector<State<Point>*>> *cm;
+    Solver<MatrixSearchable, vector<State<Point> *>> *solver;
+    CacheManager<MatrixSearchable, vector<State<Point> *>> *cm;
 public:
-    MyClientHandler(Solver<MatrixSearchable, vector<State<Point>*>> *s,
-                        CacheManager<MatrixSearchable, vector<State<Point>*>> *c) {
+    MyClientHandler(Solver<MatrixSearchable, vector<State<Point> *>> *s,
+                    CacheManager<MatrixSearchable, vector<State<Point> *>> *c) {
         solver = s;
         cm = c;
     };
@@ -43,12 +43,12 @@ public:
                     if (problemTemp == "end") {
                         switchFlag = false;
                     }
-                    // as long as it is not end of line -> update the string
+                        // as long as it is not end of line -> update the string
                     else if (buffer[i] != '\r' && buffer[i + 1] != '\n') {
 
                         problemTemp += buffer[i];
                         //client finished entering message
-                    }  else {
+                    } else {
                         // if it is end of line and problem is not empty -> update the final string
                         if (problemTemp.length() > 0) {
                             // copy content from problemTemp to problemFinal
@@ -79,57 +79,40 @@ public:
     virtual void handleClient(int socket) override {
         int i = 1;
         bool finish = false;
-        string end = "end";
+        //string end = "end";
         vector<string> fromClient;
         fromClient = readFromSocket(socket);
-        int numOfMatrix = stoi(fromClient[0].c_str());
-        while (!finish) {
-           /* fromClient = readFromSocket(socket);
-            //creating MatrixSearchable from string vector
-            MatrixSearchable myMat = MatrixSearchable();
-            myMat.convertFromString(fromClient);*/
-           if(fromClient[i] == end){
-               finish = true;
-               continue;
-           }
-           int matSize = stoi(fromClient[i].c_str());
-           vector<string> curMatrix;
-           //including curMatrix size in curMatrix strings
-           for(int j = 0;j<matSize;j++){
-               curMatrix.emplace_back(fromClient[j]);
-               //need to update i as well as j
-               ++i;
-           }
-            //creating MatrixSearchable from string vector
-            MatrixSearchable myMat = MatrixSearchable();
-            myMat.convertFromString(curMatrix);
-            if (this->cm->isSaved(myMat)) {
-                vector<State<Point>*> sol = this->cm->getSolution(myMat);
-                vector<string> matVecString = myMat.convertToString();
-                string vecString = convertVectorToString(matVecString);
-                // send the solution to client
-                const char *fromClientChar = vecString.c_str(); // convert the string to char *
-                send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
-                //still haven't solved this problem
-            } else {
-                //getting solution
-                vector<State<Point>*> solution = this->solver->solve(myMat);
-                // save the solution
-                this->cm->saveSolution(myMat, solution);
-                //converting myMat searchable to vector of strings
-                vector<string> matVecString = myMat.convertToString();
-                //converting vetcotr of strings to string for writing to client
-                string vecString = convertVectorToString(matVecString);
-                const char *solutionChar = vecString.c_str(); // convert the string to char *
-                send(socket, solutionChar, strlen(solutionChar), 0); // write to client
-            }
-        } close(socket);
+
+        //creating MatrixSearchable from string vector
+        MatrixSearchable myMat = MatrixSearchable();
+        myMat.convertFromString(fromClient);
+        if (this->cm->isSaved(myMat)) {
+            vector<State<Point> *> sol = this->cm->getSolution(myMat);
+            vector<string> matVecString = myMat.convertToString();
+            string vecString = convertVectorToString(matVecString);
+            // send the solution to client
+            const char *fromClientChar = vecString.c_str(); // convert the string to char *
+            send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
+            //still haven't solved this problem
+        } else {
+            //getting solution
+            vector<State<Point> *> solution = this->solver->solve(myMat);
+            // save the solution
+            this->cm->saveSolution(myMat, solution);
+            //converting myMat searchable to vector of strings
+            vector<string> matVecString = myMat.convertToString();
+            //converting vetcotr of strings to string for writing to client
+            string vecString = convertVectorToString(matVecString);
+            const char *solutionChar = vecString.c_str(); // convert the string to char *
+            send(socket, solutionChar, strlen(solutionChar), 0); // write to client
+        }
+        close(socket);
     }
 
-    string convertVectorToString(vector<string> myVec){
+    string convertVectorToString(vector<string> myVec) {
         string vecString = {};
-        for(int i = 0;i<myVec.size();i++){
-           vecString.append(myVec[i]);
+        for (int i = 0; i < myVec.size(); i++) {
+            vecString.append(myVec[i]);
         }
         return vecString;
     }

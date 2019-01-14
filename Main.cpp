@@ -29,17 +29,11 @@ int boot::Main::main(int argc, char *argv[]) {
     myVec.push_back("1,2,3");
     myVec.push_back("4,5,6");
     myVec.push_back("7,8,9");
-    MatrixSearchable matrix = MatrixSearchable(3);
+    MatrixSearchable matrix = MatrixSearchable();
     matrix.setMatrix(myVec);
     matrix.setInitialState("1,1");
     matrix.setGoalState("1,2");
 
-    ISearcher<MatrixSearchable, vector<string>, Point> *bestS;
-    bestS = new BestFirstSearch<MatrixSearchable, vector<string>, Point>();
-
-    //Searchable<Point> *mat = new MatrixSearchable();
-
-    //bestS->search(mat);
 
     return 0;
 }

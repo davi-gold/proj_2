@@ -9,44 +9,40 @@
 #include "ISearchable.h"
 #include "Stringable.h"
 #include <vector>
+//#include <bits/valarray_after.h>
 
 using Point = std::pair<int, int>;
 
 
 class MatrixSearchable : public ISearchable<Point>, Stringable {
-    int mSize;
+    int rowNum;
+    int colNum;
     vector<vector<State<Point> *>> myMatrix;
     State<Point> *initialState;
     State<Point> *goalState;
 public:
-    MatrixSearchable(int size) {
-        mSize = size;
-    }
-
     MatrixSearchable() {
 
     }
 
-    //sets size
-    void setSize(string size) {
-        mSize = stoi(size.c_str());
-    }
-
 //sets myMatrix
     void setMatrix(vector<string> matList) {
-        for (int k = 0; k < mSize; k++) {
+
+        for (int k = 0; k < matList.size(); k++) {
             vector<State<Point> *> cur_vec;
             myMatrix.push_back(cur_vec);
         }
+        rowNum = matList.size();
+        colNum = 0;
         string row;
-        for (unsigned long int i = 0; i < mSize; i++) {
+        for (unsigned long int i = 0; i < rowNum; i++) {
             unsigned long int rowCounter = 0;
             unsigned long int comma = 0;
             row = matList.at(i);
             string strVal;
             double val;
-            for (unsigned long int j = 0; j < mSize; j++) {
-                if (rowCounter == mSize - 1) {
+            for (unsigned long int j = 0; j < (rowCounter+1); j++) {
+                if (row.size() == 1) {
                     strVal = row;
                 } else {
                     comma = row.find(',');
@@ -59,7 +55,10 @@ public:
                 State<Point> *curState = new State<Point>(Point(i, j), val);
                 //curstate should be in index i,j beacuse for each row we will do pushback j times
                 myMatrix.at(i).push_back(curState);
-
+                //only want to increase number of columns for one row
+                if(i == 0){
+                    colNum++;
+                }
             }
         }
     }
@@ -100,50 +99,62 @@ public:
 
         if (i == 0) {
             if (j == 0) {
-                possibleStates.push_back(myMatrix.at(0).at(1));
-                possibleStates.push_back(myMatrix.at(1).at(0));
+                if(1<colNum){
+                    possibleStates.push_back(myMatrix.at(0).at(1));
+                }
+                if(1<rowNum){
+                    possibleStates.push_back(myMatrix.at(1).at(0));
+                }
             }
                 //j>0
             else {
                 //left
                 possibleStates.push_back(myMatrix.at(0).at(j - 1));
-                //right
-                possibleStates.push_back(myMatrix.at(0).at(j + 1));
-                //down
-                possibleStates.push_back(myMatrix.at(1).at(j));
+                if(j+1<colNum){
+                    //right
+                    possibleStates.push_back(myMatrix.at(0).at(j + 1));
+                }
+                if(1<rowNum){
+                    //down
+                    possibleStates.push_back(myMatrix.at(1).at(j));
+                }
             }
         }
-            //i!=0 beacuse we already checked
+            //i>0 beacuse we already checked
         else if (j == 0) {
             //up
             possibleStates.push_back(myMatrix.at(i - 1).at(0));
-            //down
-            possibleStates.push_back(myMatrix.at(i + 1).at(0));
-            //right
-            possibleStates.push_back(myMatrix.at(i).at(1));
-        } else if (i == mSize - 1) {
-            if (j == mSize - 1) {
+            if(i+1<rowNum){
+                //down
+                possibleStates.push_back(myMatrix.at(i + 1).at(0));
+            }
+            if(1<colNum){
+                //right
+                possibleStates.push_back(myMatrix.at(i).at(1));
+            }
+        } else if (i == rowNum - 1) {
+            if (j == colNum - 1) {
                 //left
-                possibleStates.push_back(myMatrix.at(mSize - 1).at(j - 1));
+                possibleStates.push_back(myMatrix.at(rowNum - 1).at(j - 1));
                 //up
-                possibleStates.push_back(myMatrix.at(i - 1).at(mSize - 1));
+                possibleStates.push_back(myMatrix.at(i - 1).at(colNum - 1));
             }
                 //j<mSize-1
             else {
                 //left
-                possibleStates.push_back(myMatrix.at(mSize - 1).at(j - 1));
+                possibleStates.push_back(myMatrix.at(rowNum - 1).at(j - 1));
                 //right
-                possibleStates.push_back(myMatrix.at(mSize - 1).at(j + 1));
+                possibleStates.push_back(myMatrix.at(rowNum - 1).at(j + 1));
                 //up
                 possibleStates.push_back(myMatrix.at(i - 1).at(j));
             }
         }
-            //i!=mSize-1 beacuse we already checked
-        else if (j == mSize - 1) {
+            //i<mSize-1 beacuse we already checked
+        else if (j == colNum - 1) {
             //down
-            possibleStates.push_back(myMatrix.at(i + 1).at(mSize - 1));
+            possibleStates.push_back(myMatrix.at(i + 1).at(colNum - 1));
             //up
-            possibleStates.push_back(myMatrix.at(i - 1).at(mSize - 1));
+            possibleStates.push_back(myMatrix.at(i - 1).at(colNum - 1));
             //right
             possibleStates.push_back(myMatrix.at(i).at(j - 1));
         } else {
@@ -162,17 +173,17 @@ public:
 
     vector<string> convertToString() {
         vector<string> matrixString;
-        string size = to_string(mSize);
-        matrixString.push_back(size);
+        //string size = to_string(mSize);
+        //matrixString.push_back(size);
         string iState = to_string(initialState->getState().first) + ","
                         + to_string(initialState->getState().second);
         matrixString.push_back(iState);
         string gState = to_string(goalState->getState().first) + ","
                         + to_string(goalState->getState().second);
         matrixString.push_back(gState);
-        for (int i = 0; i < mSize; i++) {
+        for (int i = 0; i < rowNum; i++) {
             string rowOfPoints = {};
-            for (int j = 0; j < mSize; j++) {
+            for (int j = 0; j < colNum; j++) {
                 string pointString;
                 State<Point> *point = myMatrix.at(i).at(j);
                 pointString = to_string(point->getCost());
@@ -185,15 +196,11 @@ public:
     }
 
     void convertFromString(vector<string> fromString) {
-        string sizeString = fromString.front();
+        string gState = fromString.back();
         fromString.pop_back();
-        string iState = fromString.front();
-        fromString.pop_back();
-        string gState = fromString.front();
+        string iState = fromString.back();
         fromString.pop_back();
         vector<string> matString = fromString;
-        //setting size
-        setSize(sizeString);
 
         //setting initial state
         setInitialState(iState);
