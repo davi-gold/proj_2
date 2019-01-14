@@ -213,8 +213,8 @@ public:
 
     }
 
-    virtual vector<string> getDirections(vector<State<Point> *> statesVec) {
-        vector<string> directions;
+    virtual string getDirections(vector<State<Point> *> statesVec) {
+        string directions = {};
         for (int k = 0; k < statesVec.size() - 1; k++) {
             int i1 = statesVec[k]->getState().first;
             int j1 = statesVec[k]->getState().second;
@@ -237,6 +237,7 @@ public:
                 //removing "-" in the last direction
                 direc = direc.substr(0, direc.size()-1);
             }
+            directions+=direc;
         }
         return directions;
     }

@@ -8,17 +8,17 @@
 #include "Solver.h"
 #include "Searcher.h"
 
-template <class P, class S, class T>
-class MatrixSolver : public Solver<P, S>{
-    ISearcher <P, S, T> iSrch;
+template <class S, class T>
+class MatrixSolver : public Solver<ISearchable<T>, S>{
+    ISearcher <S, T> iSrch;
     ISearchable<T> iSrchable;
 public:
-    MatrixSolver(ISearcher<P, S, T> s, ISearchable<T> is){
+    MatrixSolver(ISearcher<S, T> s, ISearchable<T> is){
         this->iSrch = s;
         this->iSrchable = is;
     }
 
-    const S& solve(P& p){
+    const S& solve(ISearchable<T>& p){
         this->iSrch.search(this->p);
     }
 

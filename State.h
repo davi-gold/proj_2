@@ -6,22 +6,23 @@
 #define PROJ_2_STATE_H
 
 #include <string>
+#include "Stringable.h"
 
 using namespace std;
 
-template <class T>
+template<class T>
 
 class State {
     T state; // the state represented by a string
     double cost; // cost to reach this state (set by a setter)
-    State<T>* cameFrom; // the state we came from to this state (setter)
+    State<T> *cameFrom; // the state we came from to this state (setter)
     double path;
     double costPath;
     bool visited = false;
 
 public:
     // CTOR
-    State(T st, double c){
+    State(T st, double c) {
         state = st;
         cost = c;
         cameFrom = nullptr;
@@ -30,42 +31,44 @@ public:
     bool getVisit() {
         return this->visited;
     }
-    T getState(){
+
+    T getState() {
         return state;
     }
 
-    void setCameFrom(State<T>* cFrom){
+    void setCameFrom(State<T> *cFrom) {
         cameFrom = cFrom;
     }
-    int getCost(){
+
+    int getCost() {
         this->cost;
     }
 
-    void setPath(double p){
+    void setPath(double p) {
         this->path = p;
     }
 
-    void setVisited(bool boolean){
+    void setVisited(bool boolean) {
         this->visited = boolean;
     }
 
-    bool equals(State<T> other){
+    bool equals(State<T> other) {
         return this->costPath == other.costPath;
     }
 
-    bool greaterThan (State<T>* other){
+    bool greaterThan(State<T> *other) {
         return this->costPath > other->costPath;
     }
 
-    bool lessThan (State<T>* other){
+    bool lessThan(State<T> *other) {
         return this->costPath < other->costPath;
     }
 
-    double getCostPath(){
+    double getCostPath() {
         return this->costPath;
     }
 
-    void setCostPath(double p){
+    void setCostPath(double p) {
         this->costPath = p;
     }
 

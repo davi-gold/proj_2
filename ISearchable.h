@@ -16,7 +16,7 @@ class ISearchable {
 public:
     virtual State<T>* getInitialState() = 0;
     virtual bool isGoalState(State<T>* s) = 0;
-    virtual vector<string> getDirections(vector<State<T>*> p) = 0;
+    virtual string getDirections(vector<State<T>*> p) = 0;
     virtual list<State<T>*> getAllPossibleStates(State<T>* s) = 0;
     vector<State<T> *> backTrace(State<T> *goalState) {
         vector<State<T> *> path;

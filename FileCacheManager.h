@@ -9,6 +9,8 @@
 #include "CacheManager.h"
 #include <map>
 #include <fstream>
+#include <vector>
+#include "Stringable.h"
 
 using namespace std;
 
@@ -27,7 +29,6 @@ public:
     };
 
     virtual bool isSaved(P p) {
-        //NEED TO CONVERT P TO STRING AND ITERATE WITH IT OVER MAP OF STRING, STRING
         for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
             if (it->first == p) {
                 return true;
@@ -39,7 +40,6 @@ public:
     virtual S getSolution(P p) {
         for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
             if (it->first == p) {
-                //NEED TO CONVERT STRING SOLUTION TO ACTUAL SOLUTION
                 string temp = it->second;
                 temp.push_back('\n');
                 return temp;
@@ -51,18 +51,27 @@ public:
     virtual void saveSolution(P p, S s) {
         probSol.insert(pair<P, S>(p, s));
         //NEED TO USE WTVR METHOD I CHOOSE TO CONVERT P AND S TO STRINGS INSTEAD OF 2 ROWS BELOW
-        string prob = p;
-        string sol = s;
-        sol = sol.substr(0, sol.size()-1);
+        vector<string> prob = p.convertToString();
+        vector<string> sol = s.convertToString();
         ofstream myFile(fileName, ios::app);
 
         //want to append the file
         if(myFile.is_open()){
-            myFile << prob << endl << sol << endl;
+            //saving number of problem rows and problem
+            myFile<<prob.size()<<endl;
+            for(int i = 0;i<prob.size();i++){
+                myFile<<prob[i]<<endl;
+            }
+            //saving number of rows in solution and solution
+            myFile<<sol.size()<<endl;
+            for(int j = 0;j<sol.size();j++){
+                myFile<<sol[j]<<endl;
+            }
             myFile.close();
         }
     };
 
+    //NEED TO UPDATE THIS
     void createMap() {
         ifstream myFile(fileName);
         string line;
@@ -71,17 +80,6 @@ public:
         string temp;
         if (myFile.is_open()) {
             unsigned long int objsNum;
-            //NEED TO CHECK IF THIS MAKES THR IFSTREAM GO A ROW BELOW
-            //myFile >> objsNum;
-            //skipping two because every two rows theres a problem and a solution
-           /* for (unsigned long int i = 0; i < SIZE OF FILE; i+=2) {
-
-                //ALSO HERE- NEED TO CHECK IF THIS MAKES THR IFSTREAM GO A ROW BELOW
-                myFile>>prob;
-               myFile>>sol;
-            }*/
-
-           //line = problem
            while(getline(myFile, line)){
 
                //copying line to prob
@@ -101,22 +99,6 @@ public:
 
         myFile.close();
     };
-
-    //need to call this when the user writes "end"
-    void saveMapInFile() {
-        ofstream myFile(fileName);
-        if (myFile.is_open()) {
-            //saving number of problems and solutions to file
-            myFile << probSol.size() << endl;
-            for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
-                myFile << it->first << endl << it->second << endl;
-            }
-        }
-
-        myFile.close();
-    };
-
-
 };
 
 

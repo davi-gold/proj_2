@@ -13,16 +13,17 @@
 #include "CacheManager.h"
 #include "MatrixSearchable.h"
 #include "MatrixSolver.h"
+#include "StringableString.h"
 
 using Point =std::pair<int, int>;
 
 class MyClientHandler : public ClientHandler {
 
-    Solver<MatrixSearchable, vector<State<Point> *>> *solver;
-    CacheManager<MatrixSearchable, vector<State<Point> *>> *cm;
+    Solver<MatrixSearchable, StringableString> *solver;
+    CacheManager<MatrixSearchable, StringableString> *cm;
 public:
-    MyClientHandler(Solver<MatrixSearchable, vector<State<Point> *>> *s,
-                    CacheManager<MatrixSearchable, vector<State<Point> *>> *c) {
+    MyClientHandler(Solver<MatrixSearchable, StringableString> *s,
+                    CacheManager<MatrixSearchable, StringableString> *c) {
         solver = s;
         cm = c;
     };
@@ -87,18 +88,20 @@ public:
         MatrixSearchable myMat = MatrixSearchable();
         myMat.convertFromString(fromClient);
         if (this->cm->isSaved(myMat)) {
-            vector<State<Point> *> sol = this->cm->getSolution(myMat);
-            vector<string> matVecString = myMat.convertToString();
-            string vecString = convertVectorToString(matVecString);
+            //myMat solution returns a string
+            StringableString sol = StringableString(this->cm->getSolution(myMat));
+            string solution = sol.getString();
+
             // send the solution to client
-            const char *fromClientChar = vecString.c_str(); // convert the string to char *
+            const char *fromClientChar = solution.c_str(); // convert the string to char *
             send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
             //still haven't solved this problem
         } else {
-            //getting solution
-            vector<State<Point> *> solution = this->solver->solve(myMat);
+            //myMat solution returns a string
+            StringableString sol = StringableString(this->solver->solve(myMat));
             // save the solution
-            this->cm->saveSolution(myMat, solution);
+            vector<string> myMatStrings = myMat.convertToString();
+            this->cm->saveSolution(myMat, sol);
             //converting myMat searchable to vector of strings
             vector<string> matVecString = myMat.convertToString();
             //converting vetcotr of strings to string for writing to client
