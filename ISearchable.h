@@ -22,8 +22,8 @@ public:
         vector<State<T> *> path;
         path.push_back(goalState);
 
-        while (goalState->getCamefrom() != NULL) {
-            State<T> *parent = goalState->getCamefrom();
+        while (goalState->getCameFrom() != NULL) {
+            State<T> *parent = goalState->getCameFrom();
             path.push_back(parent);
             goalState = parent;
         }

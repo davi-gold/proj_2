@@ -14,14 +14,14 @@ template<class S, class T>
 class BestFirstSearch : public Searcher <S, T>{
 public:
      virtual S search(ISearchable<T> *searchable){
-         this->openList.push(
+         this->openList->push(
                  searchable->getInitialState()); // OPEN = [initial state] ::: a priority queue of states to be evaluated
          searchable->getInitialState()->setVisited(true);
          unordered_set<State<T> *> *closed; // CLOSED = [] ::: a set of states already evaluated
          vector<State<T> *> pVec;
          bool flag = true;
-         while (!this->openList.getQueue().empty() && flag == true) {
-             State<T> *n = this->openList.popAndGet(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
+         while (!this->openList->getQueue().empty() && flag) {
+             State<T> *n = this->openList->popAndGet(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
              this->evalNodes++;
              closed->insert(n); // add(n,CLOSED) ::: so we won’t check n again
 
@@ -41,21 +41,23 @@ public:
                      double thisPath = n->getCostPath() + s->getCost();
 
                      // if it is not in CLOSED and it is not in OPEN
-                     if (!closed->find(s) && !this->openList->find(s)) {
+                     //*!closed->find(s)
+                     if (closed->find(s)!=closed->end() && !this->openList->find(s)) {
                          s->setCameFrom(n);
                          s->setCostPath(thisPath);
-                         this->openList.push(s);
+                         this->openList->push(s);
                      } else if (thisPath < s->getCostPath()) {
                          // Otherwise, if this new path is better than previous one
-                         if (!this->findInOpenList(s))
-                             this->openList.push(s);
+                         if (!this->openList->find(s))
+                             this->openList->push(s);
                          else
-                             this->openList.updatePrior(s, n);
+                             this->openList->updatePrior(s, n);
                      }
                  }
              }
          }
-         if (pVec != NULL) {
+         //*pVec != NULL
+         if (!pVec.empty()) {
              if (!pVec.empty())
                  return searchable->getDirections(pVec);
              else

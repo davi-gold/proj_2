@@ -72,6 +72,10 @@ public:
         this->costPath = p;
     }
 
+    State<T>* getCameFrom(){
+        return cameFrom;
+    }
+
 };
 
 #endif //PROJ_2_STATE_H
