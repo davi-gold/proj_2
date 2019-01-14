@@ -41,7 +41,7 @@ public:
             row = matList.at(i);
             string strVal;
             double val;
-            for (unsigned long int j = 0; j < (rowCounter+1); j++) {
+            for (unsigned long int j = 0; j < (rowCounter + 1); j++) {
                 if (row.size() == 1) {
                     strVal = row;
                 } else {
@@ -56,7 +56,7 @@ public:
                 //curstate should be in index i,j beacuse for each row we will do pushback j times
                 myMatrix.at(i).push_back(curState);
                 //only want to increase number of columns for one row
-                if(i == 0){
+                if (i == 0) {
                     colNum++;
                 }
             }
@@ -93,16 +93,16 @@ public:
     }
 
     virtual list<State<Point> *> getAllPossibleStates(State<Point> *s) {
-        list<State<Point> *> possibleStates;
+        list < State<Point> * > possibleStates;
         int i = s->getState().first;
         int j = s->getState().second;
 
         if (i == 0) {
             if (j == 0) {
-                if(1<colNum){
+                if (1 < colNum) {
                     possibleStates.push_back(myMatrix.at(0).at(1));
                 }
-                if(1<rowNum){
+                if (1 < rowNum) {
                     possibleStates.push_back(myMatrix.at(1).at(0));
                 }
             }
@@ -110,11 +110,11 @@ public:
             else {
                 //left
                 possibleStates.push_back(myMatrix.at(0).at(j - 1));
-                if(j+1<colNum){
+                if (j + 1 < colNum) {
                     //right
                     possibleStates.push_back(myMatrix.at(0).at(j + 1));
                 }
-                if(1<rowNum){
+                if (1 < rowNum) {
                     //down
                     possibleStates.push_back(myMatrix.at(1).at(j));
                 }
@@ -124,11 +124,11 @@ public:
         else if (j == 0) {
             //up
             possibleStates.push_back(myMatrix.at(i - 1).at(0));
-            if(i+1<rowNum){
+            if (i + 1 < rowNum) {
                 //down
                 possibleStates.push_back(myMatrix.at(i + 1).at(0));
             }
-            if(1<colNum){
+            if (1 < colNum) {
                 //right
                 possibleStates.push_back(myMatrix.at(i).at(1));
             }
@@ -173,24 +173,24 @@ public:
 
     vector<string> convertToString() {
         vector<string> matrixString;
-        //string size = to_string(mSize);
-        //matrixString.push_back(size);
+        for (int i = 0; i < rowNum; i++) {
+            string rowOfPoints = {};
+            for (int j = 0; j < colNum; j++) {
+                State<Point> *point = myMatrix.at(i).at(j);
+                string pointString = to_string(point->getCost());
+                rowOfPoints+=pointString;
+                if(j!=colNum-1){
+                    rowOfPoints+=",";
+                }
+            }
+            matrixString.push_back(rowOfPoints);
+        }
         string iState = to_string(initialState->getState().first) + ","
                         + to_string(initialState->getState().second);
         matrixString.push_back(iState);
         string gState = to_string(goalState->getState().first) + ","
                         + to_string(goalState->getState().second);
         matrixString.push_back(gState);
-        for (int i = 0; i < rowNum; i++) {
-            string rowOfPoints = {};
-            for (int j = 0; j < colNum; j++) {
-                string pointString;
-                State<Point> *point = myMatrix.at(i).at(j);
-                pointString = to_string(point->getCost());
-                rowOfPoints.append(pointString);
-            }
-            matrixString.push_back(rowOfPoints);
-        }
 
         return matrixString;
     }
@@ -226,18 +226,16 @@ public:
                 direc = "down-";
             } else if (i1 > i2) {
                 direc = "up-";
-            }
-            else if(j1<j2){
+            } else if (j1 < j2) {
                 direc = "right-";
-            }
-            else if(j1>j2){
+            } else if (j1 > j2) {
                 direc = "left-";
             }
-            if(k+1 == statesVec.size()-1){
+            if (k + 1 == statesVec.size() - 1) {
                 //removing "-" in the last direction
-                direc = direc.substr(0, direc.size()-1);
+                direc = direc.substr(0, direc.size() - 1);
             }
-            directions+=direc;
+            directions += direc;
         }
         return directions;
     }

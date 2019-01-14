@@ -34,6 +34,7 @@ int boot::Main::main(int argc, char *argv[]) {
     matrix->setMatrix(myVec);
     matrix->setInitialState("1,1");
     matrix->setGoalState("1,0");
+    //vector<string> matV = matrix->convertToString();
 
     ISearcher<string, Point> *srch = new BestFirstSearch<string, Point>();
     string sol = srch->search(matrix);
