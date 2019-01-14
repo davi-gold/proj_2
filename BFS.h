@@ -16,12 +16,12 @@ class BFS : public Searcher <S, T> {
         unordered_set<State<T> *> *closed;
         State<T> *s = searchable->getInitialState();
         s->setCameFrom(NULL);
-        this->openList.push(s);
+        this->openList->push(s);
         searchable->getInitialState()->setVisited(true);
         bool flag = true;
 
-        while (!this->openList.getQueue().empty() && flag == true) { // while openList is not empty
-            State<T> *n = this->openList.popAndGet();
+        while (!this->openList->getQueue().empty() && flag == true) { // while openList is not empty
+            State<T> *n = this->openList->popAndGet();
             this->evalNodes++;
             if (searchable->isGoalState(n)) {
                 closed->insert(n);
@@ -34,7 +34,7 @@ class BFS : public Searcher <S, T> {
                 for (typename list<State<T>>::iterator it = successors.begin(); it != successors.end(); ++it) {
                     State<T> *s = *it;
                     s->setCameFrom(n);
-                    this->openList.push(s);
+                    this->openList->push(s);
                 }
             }
         }
