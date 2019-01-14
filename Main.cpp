@@ -4,6 +4,7 @@
 #include "Main.h"
 //#include "Searcher.h"
 #include "MatrixSearchable.h"
+#include "ISearcher.h"
 #include "BestFirstSearch.h"
 
 
@@ -28,16 +29,15 @@ int boot::Main::main(int argc, char *argv[]) {
     myVec.push_back("1,2,3");
     myVec.push_back("4,5,6");
     myVec.push_back("7,8,9");
-    MatrixSearchable *matrix = new MatrixSearchable(3);
-    matrix->setMatrix(myVec);
-    matrix->setInitialState("1,1");
-    matrix->setGoalState("1,2");
-//
-    ISearchable<Point> *mat = matrix;
-//PROBLEM HERE
-    Searcher<vector<string>, Point> *bestS =
-        new BestFirstSearch<vector<string>, Point>();
+    MatrixSearchable matrix = MatrixSearchable(3);
+    matrix.setMatrix(myVec);
+    matrix.setInitialState("1,1");
+    matrix.setGoalState("1,2");
 
+    ISearcher<MatrixSearchable, vector<string>, Point> *bestS;
+    bestS = new BestFirstSearch<MatrixSearchable, vector<string>, Point>();
+
+    //Searchable<Point> *mat = new MatrixSearchable();
 
     //bestS->search(mat);
 

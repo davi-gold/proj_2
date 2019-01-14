@@ -5,7 +5,6 @@
 #ifndef PROJ_2_SEARCHER_H
 #define PROJ_2_SEARCHER_H
 
-#include <queue>
 #include "ISearcher.h"
 #include "State.h"
 #include "MyPriorityQueue.h"

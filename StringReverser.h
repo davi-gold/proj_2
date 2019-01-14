@@ -5,7 +5,6 @@
 #ifndef PROJ_2_STRINGREVERSER_H
 #define PROJ_2_STRINGREVERSER_H
 
-
 #include "Solver.h"
 #include <string>
 

@@ -9,7 +9,6 @@
 #include "ISearchable.h"
 #include "Stringable.h"
 #include <vector>
-//#include <bits/valarray_after.h>
 
 using Point = std::pair<int, int>;
 

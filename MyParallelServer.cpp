@@ -2,6 +2,7 @@
 // Created by david on 1/13/19.
 //
 
+#include <netinet/in.h>
 #include "MyParallelServer.h"
 
 MyParallelServer::MyParallelServer() {}
