@@ -6,6 +6,8 @@
 #include "MatrixSearchable.h"
 #include "ISearcher.h"
 #include "BestFirstSearch.h"
+#include "StringableString.h"
+#include "ISearchable.h"
 
 
 using Point =std::pair<int,int>;
@@ -28,11 +30,13 @@ int boot::Main::main(int argc, char *argv[]) {
     vector<string> myVec;
     myVec.push_back("1,2,3");
     myVec.push_back("4,5,6");
-    MatrixSearchable matrix = MatrixSearchable();
-    matrix.setMatrix(myVec);
-    matrix.setInitialState("1,1");
-    matrix.setGoalState("1,0");
-    list<State<Point>*> posS = matrix.getAllPossibleStates(matrix.getInitialState());
+    MatrixSearchable *matrix = new MatrixSearchable();
+    matrix->setMatrix(myVec);
+    matrix->setInitialState("1,1");
+    matrix->setGoalState("1,0");
+
+    ISearcher<string, Point> *srch = new BestFirstSearch<string, Point>();
+    string sol = srch->search(matrix);
 
 
     return 0;
