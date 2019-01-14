@@ -18,7 +18,7 @@ public:
          this->openList->push(s); // OPEN = [initial state] ::: a priority queue of states to be evaluated
          s->setCameFrom(NULL);
          searchable->getInitialState()->setVisited(true);
-         unordered_set<State<T> *> *closed; // CLOSED = [] ::: a set of states already evaluated
+         unordered_set<State<T> *> *closed = new unordered_set<State<T>*>(); // CLOSED = [] ::: a set of states already evaluated
          vector<State<T> *> pVec;
          bool flag = true;
          while (!(this->openList->getQueue()->empty()) && flag) {

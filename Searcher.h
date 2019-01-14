@@ -13,8 +13,8 @@ template<class S, class T>
 
 class Searcher : public ISearcher<S, T> {
 protected:
-    MyPriorityQueue<T> *openList;
-    int evalNodes;
+    MyPriorityQueue<T> *openList = new MyPriorityQueue<T>();
+    int evalNodes = 0;
 
 public:
     Searcher() {};
