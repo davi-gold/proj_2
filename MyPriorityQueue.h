@@ -36,9 +36,11 @@ public:
     bool find(State<T> *state) {
         priority_queue<State<T> *> list = *this->queue;
         while (!list.empty()) {
-            if (state->equals(std::move(const_cast<int &>(list.top()))))
+           // if (state->equals(std::move(const_cast<int &>(list.top()))))
+           State<T> *curState = list.top();
+           if(state->equals(curState))
                 return true;
-            list.pop();
+           list.pop();
         }
         return false;
     }
@@ -63,7 +65,8 @@ public:
     void updatePrior(State<T> *oldOne, State<T> *newOne) {
         vector<State<T> *> tVec;
         while (!this->queue->empty()) {
-            State<T> *changedState = this->queue->pop();
+            State<T> *changedState = this->queue->top();
+            this->queue->pop();
             tVec.push_back(changedState);
             if (oldOne->equals(newOne)) {
                 changedState->setCameFrom(newOne);

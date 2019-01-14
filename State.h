@@ -52,8 +52,8 @@ public:
         this->visited = boolean;
     }
 
-    bool equals(State<T> other) {
-        return this->costPath == other.costPath;
+    bool equals(State<T> *other) {
+        return this->costPath == other->costPath;
     }
 
     bool greaterThan(State<T> *other) {

@@ -59,7 +59,8 @@ public:
          if (!pVec.empty())
              return searchable->getDirections(pVec);
          else
-             return perror("path is empty!\n");
+             //return perror("path is empty!\n");
+             throw ("path is empty!\n");
      }
 };
 
