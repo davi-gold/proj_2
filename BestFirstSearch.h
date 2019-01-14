@@ -20,7 +20,7 @@ public:
          unordered_set<State<T> *> *closed; // CLOSED = [] ::: a set of states already evaluated
          vector<State<T> *> pVec;
          bool flag = true;
-         while (!this->openList->getQueue().empty() && flag) {
+         while (!(this->openList->getQueue()->empty()) && flag) {
              State<T> *n = this->openList->popAndGet(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
              this->evalNodes++;
              closed->insert(n); // add(n,CLOSED) ::: so we won’t check n again
@@ -56,13 +56,10 @@ public:
                  }
              }
          }
-         //*pVec != NULL
-         if (!pVec.empty()) {
-             if (!pVec.empty())
-                 return searchable->getDirections(pVec);
-             else
-                 return perror("path is empty!\n");
-         } else return perror("path is NULL!\n");
+         if (!pVec.empty())
+             return searchable->getDirections(pVec);
+         else
+             return perror("path is empty!\n");
      }
 };
 

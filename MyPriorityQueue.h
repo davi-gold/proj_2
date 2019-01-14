@@ -21,13 +21,13 @@ class MyPriorityQueue {
 public:
     // empty constructor
     MyPriorityQueue() {
-        this->queue = priority_queue<State<T> *>();
+        this->queue = new priority_queue<State<T> *>();
     }
 
 
     // pop func
     State<T> *popAndGet() {
-        State<T> *tmp = this->queue.top();
+        State<T> *tmp = this->queue->top();
         this->queue->pop();
         return tmp;
     }
@@ -75,7 +75,7 @@ public:
             this->queue->push(tVec[i]);
     }
 
-    priority_queue<State<T> *> getQueue() {
+    priority_queue<State<T> *>* getQueue() {
         return this->queue;
     }
 };

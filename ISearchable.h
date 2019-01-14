@@ -10,6 +10,8 @@
 #include <list>
 #include "State.h"
 
+using namespace std;
+
 template <class T>
 
 class ISearchable {
