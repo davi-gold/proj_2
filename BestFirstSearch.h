@@ -14,8 +14,9 @@ template<class S, class T>
 class BestFirstSearch : public Searcher <S, T>{
 public:
      virtual S search(ISearchable<T> *searchable){
-         this->openList->push(
-                 searchable->getInitialState()); // OPEN = [initial state] ::: a priority queue of states to be evaluated
+         State<T> *s = searchable->getInitialState();
+         this->openList->push(s); // OPEN = [initial state] ::: a priority queue of states to be evaluated
+         s->setCameFrom(NULL);
          searchable->getInitialState()->setVisited(true);
          unordered_set<State<T> *> *closed; // CLOSED = [] ::: a set of states already evaluated
          vector<State<T> *> pVec;
