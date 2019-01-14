@@ -3,7 +3,6 @@
 //
 
 #include <unordered_set>
-#include <bits/unordered_set.h>
 #include "BestFirstSearch.h"
 
 using namespace std;
