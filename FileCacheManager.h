@@ -78,26 +78,37 @@ public:
         P prob;
         S sol;
         string temp;
+        vector<string> stringsVec;
         if (myFile.is_open()) {
             unsigned long int objsNum;
            while(getline(myFile, line)){
-
-               //copying line to prob
-                //line>>prob;
-                prob = line;
-               //line = solution
-               getline(myFile, line);
-               //copying line to sol
-               //line>>sol;
-               sol = line;
-               //getting enter - might be unnecesarry
-               getline(myFile, temp);
-               //NEED TO USE MAP OF STRING, STRING INSTEAD
-               probSol.insert(pair<P, S> (prob, sol));
+                stringsVec.emplace_back(line);
            }
+            myFile.close();
         }
-
-        myFile.close();
+        for(int i = 0;i<stringsVec.size();i++){
+            //problem size
+            int probSize = stoi(stringsVec[i].c_str());
+            vector<string> probVec;
+            //j will strat one row below i which equal the number of rows of the problem
+            for(int j = i+1;j<probSize;j++){
+                probVec.emplace_back(stringsVec[j]);
+            }
+            //creating problem from strings vector
+            prob = prob.convertFromString(stringsVec);
+            i+=probSize;
+            //solution size
+            int solSize = stoi(stringsVec[i].c_str());
+            vector<string> solVec;
+            //k will start from row below the solution size
+            for(int k = i;k<solSize;k++){
+                solVec.emplace_back(stringsVec[k]);
+            }
+            sol = sol.converFromString(solVec);
+            i+=solSize;
+        }
+        //inserting problem and solution
+        probSol.insert(pair<P, S>(prob, sol));
     };
 };
 
