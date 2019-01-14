@@ -26,7 +26,7 @@ public:
 
 
     // pop func
-    State<T> *pop() {
+    State<T> *popAndGet() {
         State<T> *tmp = this->queue.top();
         this->queue.pop();
         return tmp;

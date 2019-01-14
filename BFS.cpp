@@ -20,7 +20,7 @@ S BFS<P, S, T>::search(ISearchable<T> *searchable) {
     bool flag = true;
 
     while (!this->openList.getQueue().empty() && flag == true) { // while openList is not empty
-        State<T> *n = this->openList.pop();
+        State<T> *n = this->openList.popAndGet();
         this->evalNodes++;
         if (searchable->isGoalState(n)) {
             closed->insert(n);

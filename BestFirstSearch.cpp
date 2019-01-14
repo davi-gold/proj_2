@@ -18,7 +18,7 @@ S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
     vector<State<T> *> pVec;
     bool flag = true;
     while (!this->openList.getQueue().empty() && flag == true) {
-        State<T> *n = this->openList.pop(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
+        State<T> *n = this->openList.popAndGet(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
         this->evalNodes++;
         closed->insert(n); // add(n,CLOSED) ::: so we won’t check n again
 
