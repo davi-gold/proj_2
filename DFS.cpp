@@ -22,7 +22,7 @@ S DFS<P, S, T>::search(ISearchable<T> *searchable) {
     while (!pStack.empty() && flag == true) {
         s = pStack.top();
         pStack.pop();
-        this->evaluatedNodes++;
+        this->evalNodes++;
         if (searchable->isGoalState(s->getState()))
             flag = false;
         if (flag) {

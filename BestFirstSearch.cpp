@@ -17,8 +17,9 @@ S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
     unordered_set<State<T> *> *closed; // CLOSED = [] ::: a set of states already evaluated
     vector<State<T> *> pVec;
     bool flag = true;
-    while (!this->openList.empty() && flag == true) {
-        State<T> *n = this->popOpenList(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
+    while (!this->openList.getQueue().empty() && flag == true) {
+        State<T> *n = this->openList.pop(); // n <-- dequeue(OPEN) ::: Remove the best node from OPEN
+        this->evalNodes++;
         closed->insert(n); // add(n,CLOSED) ::: so we won’t check n again
 
         if (searchable->isGoalState(n)) { // If n is the goal state
@@ -43,7 +44,7 @@ S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
                     if (!this->findInOpenList(s))
                         this->openList.push(s);
                     else
-                        this->updatePrior(s, n);
+                        this->openList.updatePrior(s, n);
                 }
             }
         }

@@ -8,69 +8,26 @@
 #include <queue>
 #include "ISearcher.h"
 #include "State.h"
+#include "MyPriorityQueue.h"
 
 template<class P, class S, class T>
 
 class Searcher : public ISearcher<P, S, T> {
 protected:
-    priority_queue<State<T>*> openList;
-    int evaluatedNodes;
-
-    virtual State<T>* popOpenList() {
-        evaluatedNodes++;
-        State<T>* temp = openList.top();
-        openList.pop();
-        return temp;
-    };
+    MyPriorityQueue<T> openList;
+    int evalNodes;
 
 public:
-    Searcher() {
-        openList = priority_queue<State<T>*>();
-        evaluatedNodes = 0;
-    };
-
-    bool findInOpenList(State<T>* s) {
-        priority_queue<State<T>*> openListCpy = this->openList;
-        while (!openListCpy.empty()) {
-            if (s->equals(std::move(const_cast<int &>(openListCpy.top())))) {
-                return true;
-            }
-            openListCpy.pop();
-        }
-        return false;
-    }
-
-    void setEvaluatedNodes(int n) {
-        this->evaluatedNodes = n;
-    }
-
-    virtual int OpenListSize() {
-        return openList.size();
-    };
-
-    //purposely not virtual
-    int getNumberOfNodesEvaluated() {
-        return evaluatedNodes;
-    };
-
-
-
-    void updatePrior(State<T> *oldOne, State<T> *newOne) {
-        vector<State<T>*> tVec;
-        while (!this->openList.empty()) {
-            State<T>* changedState = this->popFromthePq();
-            tVec.push_back(changedState);
-            if (oldOne->equals(newOne)){
-                changedState->setCameFrom(newOne);
-                changedState->setCostPath(newOne->getCostPath() + oldOne->getCost());
-                break;
-            }
-        }
-        for (int i = 0; i < tVec.size(); i++)
-            this->openList.push(tVec[i]);
-    }
+    Searcher() {};
 
     virtual S search(ISearchable<T> *searchable) = 0;
+
+    // set the number of nodes evaluated
+    void setEvaluatedNodes(int n) { this->evalNodes = n; }
+
+    // return the number of nodes evaluated
+    int getNumOfNodesEval() { return this->evalNodes; }
+
 };
 
 
