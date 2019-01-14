@@ -8,9 +8,9 @@
 
 using namespace std;
 
-template<class P, class S, class T>
+template<class S, class T>
 
-S BestFirstSearch<P, S, T>::search(ISearchable<T> *searchable) {
+S BestFirstSearch<S, T>::search(ISearchable<T> *searchable) {
     this->openList.push(
             searchable->getInitialState()); // OPEN = [initial state] ::: a priority queue of states to be evaluated
     searchable->getInitialState()->setVisited(true);

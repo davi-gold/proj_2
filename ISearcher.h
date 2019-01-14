@@ -8,7 +8,7 @@
 #include "ISearchable.h"
 #include "State.h"
 
-template <class P, class S, class T>
+template <class S, class T>
 
 class ISearcher {
 protected:

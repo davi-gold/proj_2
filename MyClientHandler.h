@@ -77,14 +77,32 @@ public:
     }
 
     virtual void handleClient(int socket) override {
+        int i = 1;
         bool finish = false;
         string end = "end";
         vector<string> fromClient;
+        fromClient = readFromSocket(socket);
+        int numOfMatrix = stoi(fromClient[0].c_str());
         while (!finish) {
-            fromClient = readFromSocket(socket);
+           /* fromClient = readFromSocket(socket);
             //creating MatrixSearchable from string vector
             MatrixSearchable myMat = MatrixSearchable();
-            myMat.convertFromString(fromClient);
+            myMat.convertFromString(fromClient);*/
+           if(fromClient[i] == end){
+               finish = true;
+               continue;
+           }
+           int matSize = stoi(fromClient[i].c_str());
+           vector<string> curMatrix;
+           //including curMatrix size in curMatrix strings
+           for(int j = 0;j<matSize;j++){
+               curMatrix.emplace_back(fromClient[j]);
+               //need to update i as well as j
+               ++i;
+           }
+            //creating MatrixSearchable from string vector
+            MatrixSearchable myMat = MatrixSearchable();
+            myMat.convertFromString(curMatrix);
             if (this->cm->isSaved(myMat)) {
                 vector<State<Point>*> sol = this->cm->getSolution(myMat);
                 vector<string> matVecString = myMat.convertToString();

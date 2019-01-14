@@ -11,11 +11,11 @@
 
 using namespace std;
 
-template<class P, class S, class T>
+template<class S, class T>
 
 #include "Searcher.h"
 
-class DFS : public Searcher<P, S, T> {
+class DFS : public Searcher<S, T> {
     S search(ISearchable<T> *searchable);
 };
 

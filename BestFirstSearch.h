@@ -8,9 +8,9 @@
 
 #include "Searcher.h"
 
-template<class P, class S, class T>
+template<class S, class T>
 
-class BestFirstSearch : public Searcher <P, S, T>{
+class BestFirstSearch : public Searcher <S, T>{
 public:
      virtual S search(ISearchable<T> *searchable);
 };

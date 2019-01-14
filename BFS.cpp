@@ -7,10 +7,10 @@
 
 using namespace std;
 
-template<class P, class S, class T>
+template<class S, class T>
 
 
-S BFS<P, S, T>::search(ISearchable<T> *searchable) {
+S BFS<S, T>::search(ISearchable<T> *searchable) {
     vector<State<T> *> pVec;
     unordered_set<State<T> *> *closed;
     State<T> *s = searchable->getInitialState();

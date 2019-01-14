@@ -8,10 +8,10 @@
 
 using namespace std;
 
-template<class P, class S, class T>
+template<class S, class T>
 
 
-S DFS<P, S, T>::search(ISearchable<T> *searchable) {
+S DFS<S, T>::search(ISearchable<T> *searchable) {
 
     stack<State<T> *> pStack;
     State<T> *s = searchable->getInitialState();

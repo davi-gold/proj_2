@@ -35,8 +35,8 @@ int boot::Main::main(int argc, char *argv[]) {
 //
     ISearchable<Point> *mat = matrix;
 //PROBLEM HERE
-    Searcher<MatrixSearchable, vector<string>, Point> *bestS =
-        new BestFirstSearch<MatrixSearchable, vector<string>, Point>();
+    Searcher<vector<string>, Point> *bestS =
+        new BestFirstSearch<vector<string>, Point>();
 
 
     //bestS->search(mat);

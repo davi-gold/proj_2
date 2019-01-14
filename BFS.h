@@ -8,9 +8,9 @@
 #include <bits/unordered_set.h>
 #include "Searcher.h"
 
-template<class P, class S, class T>
+template<class S, class T>
 
-class BFS : public Searcher <P, S, T> {
+class BFS : public Searcher <S, T> {
     S search(ISearchable<T> *searchable) override;
 };
 
