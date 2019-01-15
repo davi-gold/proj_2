@@ -14,11 +14,14 @@ template<class S, class T>
 class Searcher : public ISearcher<S, T> {
 
 protected:
-    MyPriorityQueue<T> *openList = new MyPriorityQueue<T>();
-    int evalNodes = 0;
+    MyPriorityQueue<T> *openList;
+    int evalNodes;
 
 public:
-    Searcher() {};
+    Searcher() {
+        this->openList = new MyPriorityQueue<T>();
+        this->evalNodes = 0;
+    };
 
     virtual S search(ISearchable<T> *searchable) = 0;
 

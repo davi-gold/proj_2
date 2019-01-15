@@ -59,7 +59,7 @@ public:
             return searchable->getDirections(pVec);
         }
         else
-               return perror("path is empty!\n");
+               throw ("path is empty!\n");
     }
 };
 
