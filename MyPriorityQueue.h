@@ -7,7 +7,6 @@
 
 #include <queue>
 #include "State.h"
-#include "Compare.h"
 
 using namespace std;
 
