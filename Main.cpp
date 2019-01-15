@@ -30,10 +30,13 @@ int boot::Main::main(int argc, char *argv[]) {
     vector<string> myVec;
     myVec.push_back("1,2,3");
     myVec.push_back("4,5,6");
+    myVec.push_back("7,8,9");
     MatrixSearchable *matrix = new MatrixSearchable();
     matrix->setMatrix(myVec);
-    matrix->setInitialState("1,1");
-    matrix->setGoalState("1,0");
+    matrix->setInitialState("0,0");
+    matrix->setGoalState("2,1");
+
+    //list<State<Point> *> posS = matrix->getAllPossibleStates(matrix->getInitialState());
 
     Searcher<string, Point> *srch = new BestFirstSearch<string, Point>();
     string sol = srch->search(matrix);

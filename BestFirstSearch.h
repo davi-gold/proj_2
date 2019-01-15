@@ -28,8 +28,7 @@ public:
 
             if (searchable->isGoalState(n)) { // If n is the goal state
                 //*pVec = searchable->backTrace();
-                pVec = searchable->backTrace(
-                        n); // back traces through the parents, calling the delegated method, returns a list of states with n as a parent
+                pVec = searchable->backTrace(n); // back traces through the parents, calling the delegated method, returns a list of states with n as a parent
                 flag = false;
             }
             if (flag) {
@@ -58,8 +57,9 @@ public:
                 }
             }
         }
-        if (!pVec.empty())
+           if (!pVec.empty()){
             return searchable->getDirections(pVec);
+        }
         else
             //return perror("path is empty!\n");
             throw ("path is empty!\n");

@@ -168,7 +168,9 @@ public:
             possibleStates.push_back(myMatrix.at(i + 1).at(j));
         }
 
-        return possibleStates;
+        list<State<Point> *> final = checkSetPossibleStates(possibleStates);
+
+        return final;
     }
 
     vector<string> convertToString() {
@@ -215,11 +217,11 @@ public:
 
     virtual string getDirections(vector<State<Point> *> statesVec) {
         string directions = {};
-        for (int k = 0; k < statesVec.size() - 1; k++) {
+        for (int k = 0; k < statesVec.size()-1; k++) {
             int i1 = statesVec[k]->getState().first;
             int j1 = statesVec[k]->getState().second;
-            int i2 = statesVec[k]->getState().first;
-            int j2 = statesVec[k]->getState().second;
+            int i2 = statesVec[k+1]->getState().first;
+            int j2 = statesVec[k+1]->getState().second;
             string direc;
             //cannot be a combination of two because there is no diagonal
             if (i1 < i2) {
@@ -238,6 +240,19 @@ public:
             directions += direc;
         }
         return directions;
+    }
+
+    list<State<Point> *> checkSetPossibleStates(list<State<Point> *> myList){
+
+        list<State<Point> *> final;
+
+        for(std::list<State<Point> *>::iterator it=myList.begin(); it != myList.end(); ++it){
+            if(!(*it)->getVisit()){
+                (*it)->setVisited(true);
+                final.push_back(*it);
+            }
+        }
+        return final;
     }
 };
 
