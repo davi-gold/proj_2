@@ -27,7 +27,6 @@ public:
             closed->insert(n); // add(n,CLOSED) ::: so we won’t check n again
 
             if (searchable->isGoalState(n)) { // If n is the goal state
-                //*pVec = searchable->backTrace();
                 pVec = searchable->backTrace(n); // back traces through the parents, calling the delegated method, returns a list of states with n as a parent
                 flag = false;
             }
@@ -42,7 +41,6 @@ public:
                     double thisPath = n->getCostPath() + s->getCost();
 
                     // if it is not in CLOSED and it is not in OPEN
-                    //*!closed->find(s)
                     if (!checkIfInClosed(s, closed) && !this->openList->find(s)) {
                         s->setCameFrom(n);
                         s->setCostPath(thisPath);
@@ -61,8 +59,7 @@ public:
             return searchable->getDirections(pVec);
         }
         else
-            //return perror("path is empty!\n");
-            throw ("path is empty!\n");
+               return perror("path is empty!\n");
     }
 };
 
