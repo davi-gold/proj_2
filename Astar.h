@@ -10,49 +10,112 @@
 #include "Searcher.h"
 
 template<class S, class T>
+
 class Astar : public Searcher<S, T> {
+    vector<State<T> *> openListVec;
+
+
     S search(ISearchable<T> *searchable) {
-        int g, f, h;
-        unordered_set<State<T> *> *closed;
-        State<T> *s = searchable->getInitialState();
-        s->setCameFrom(NULL);
-        this->openList->push(s); // Add the start node
-        searchable->getInitialState()->setVisited(true);
-        bool flag = true;
-        while (!this->openList->getQueue().empty() && flag == true) {
-            State<T> *n = this->openList->popAndGet();
+        this->evalNodes = 0;
+//        int m;
+//        double f, g, h; // A* : f(n) = g(n) + h(n)
+        vector<State<T> *> closeList;
+        State<T> *initialState = searchable->getInitialState();
+        State<T> *goalState = searchable->getGoal();
+//        m = 0;
+//        g = std::abs(initialState->getState().first - goalState->getState().first);
+//        h = std::abs(initialState->getState().second - goalState->getState().second);
+//
+//        f = g + h;
+
+        this->openListVec.push_back(initialState);
+        while (!this->openListVec.empty()) {
+            State<T> *thisState = this->lowest(goalState);
+            thisState->setVisited(true);
+            closeList.push_back(thisState);
             this->evalNodes++;
-            closed->insert(n);
 
-            list<State<T> *> successors = searchable->getAllPossibleStates(n); // Create n's successors
-            for (typename list<State<T> *>::iterator it = successors.begin(); it != successors.end(); ++it) {
-                State<T> *s = *it; // current node
-                if (closed->find(s) != closed->end())
+            if (goalState->getState() == thisState->getState())
                     break;
-                else {
-                    if (!this->openList->find(s)) {
-                        this->openList->push(s);
-                        s->setCameFrom(n);
-                        g = s->getCostPath();
-                        // record the path
-                        h = 0;
-                        f = g + h;
-                    } else {
 
+            list<State<T> *> successors = searchable->getAllPossibleStates(thisState);
+            while (!successors.empty()) {
+                State<T> *tState = successors.back();
+                successors.pop_back();
+                if (tState->getVisit())
+                    continue;
+
+                double newPath = thisState->getCostPath() + tState->getCost();
+                if (find(this->openListVec.begin(), this->openListVec.end(), tState) != this->openListVec.end()) {
+                    if (tState->getCostPath() < newPath)
+                        continue;
+                } else if (find(closeList.begin(), closeList.end(), tState) != closeList.end()) {
+                    if (tState->getCostPath() < newPath)
+                        continue;
+
+                    vector<State<T> *> toOpen;
+                    typename vector<State<T> *>::iterator it;
+
+                    for (it = closeList.begin(); it != closeList.end(); ++it) {
+                        State<T> *n = closeList.back();
+                        closeList.pop_back();
+                        toOpen.push_back(n);
+
+                        if (n->getState() == tState->getState()) {
+                            this->openListVec.push_back(n);
+                            break;
+                        }
                     }
-                }
-                // generate relevant path
-                double thisPath = n->getCostPath() + s->getCost();
+                } else
+                    this->openListVec.push_back(tState);
 
-
+                tState->setCostPath(newPath);
+                tState->setCameFrom(thisState);
             }
         }
-
-
-        State<T> *getLowestFcost(MyPriorityQueue<T> *q) {
-
+        vector<State<T> *> pVec = searchable->backTrace(searchable->getGoal());
+        if (!pVec.empty())
+            return searchable->getDirections(pVec);
+        else throw ("path is empty!\n");
         }
-    };
+
+
+    State<T> *lowest(State<T> *g) {
+        vector<State<T> *> temporaryStVec;
+        State<T> *lowValst = this->openListVec.back();
+        openListVec.pop_back();
+
+        double a = std::abs(lowValst->getState().first - g->getState().first);
+        double b = std::abs(lowValst->getState().second - g->getState().second);
+        double heu = a + b; // heuristic
+        double one = lowValst->getCostPath() + heu;
+
+        while (!this->openListVec.empty()) {
+            State<T> *st = openListVec.back();
+            openListVec.pop_back();
+
+            double a = std::abs(st->getState().first - g->getState().first);
+            double b = std::abs(st->getState().second - g->getState().second);
+            double heu = a + b; // heuristic
+            double two = st->getCostPath() + heu;
+
+            if (one > two) {
+                one = two;
+                temporaryStVec.push_back(lowValst);
+                lowValst = st;
+                continue;
+            }
+            temporaryStVec.push_back(st);
+        }
+        for (int i = 0; i < temporaryStVec.size(); i++) {
+            State<T> *t = temporaryStVec[i];
+            this->openListVec.push_back(t);
+        }
+        return lowValst;
+    }
+
+};
+
 
 
 #endif //PROJ_2_ASTAR_H

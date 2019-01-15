@@ -11,6 +11,7 @@
 #include "BFS.h"
 #include "MyClientHandler.h"
 #include "DFS.h"
+#include "Astar.h"
 
 
 using Point =std::pair<int,int>;
@@ -40,8 +41,11 @@ int boot::Main::main(int argc, char *argv[]) {
 
     //list<State<Point> *> posS = matrix->getAllPossibleStates(matrix->getInitialState());
 
-    Searcher<string, Point> *srch = new DFS<string, Point>();
+    Searcher<string, Point> *srch = new Astar<string, Point>();
     string sol = srch->search(matrix);
-
+    if (sol == "")
+        cout << "EMPTY" << endl;
+    else
+        cout << sol << endl;
     return 0;
 }
