@@ -14,12 +14,12 @@ template<class S, class T>
 class Searcher : public ISearcher<S, T> {
 
 protected:
-    MyPriorityQueue<State<T>> *openList;
+    MyPriorityQueue<T> *openList;
     int evalNodes;
 
 public:
     Searcher() {
-        this->openList = new MyPriorityQueue<State<T>>();
+        this->openList = new MyPriorityQueue<T>();
         this->evalNodes = 0;
     };
 

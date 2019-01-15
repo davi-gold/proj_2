@@ -17,16 +17,9 @@ class Astar : public Searcher<S, T> {
 
     S search(ISearchable<T> *searchable) {
         this->evalNodes = 0;
-//        int m;
-//        double f, g, h; // A* : f(n) = g(n) + h(n)
         vector<State<T> *> closeList;
         State<T> *initialState = searchable->getInitialState();
         State<T> *goalState = searchable->getGoal();
-//        m = 0;
-//        g = std::abs(initialState->getState().first - goalState->getState().first);
-//        h = std::abs(initialState->getState().second - goalState->getState().second);
-//
-//        f = g + h;
 
         this->openListVec.push_back(initialState);
         while (!this->openListVec.empty()) {
@@ -36,14 +29,16 @@ class Astar : public Searcher<S, T> {
             this->evalNodes++;
 
             if (goalState->getState() == thisState->getState())
-                    break;
+                break;
 
+            searchable->updateVisitOnOff(false);
             list<State<T> *> successors = searchable->getAllPossibleStates(thisState);
+            searchable->updateVisitOnOff(true);
             while (!successors.empty()) {
                 State<T> *tState = successors.back();
                 successors.pop_back();
-                if (tState->getVisit())
-                    continue;
+//                if (tState->getVisit())
+//                    continue;
 
                 double newPath = thisState->getCostPath() + tState->getCost();
                 if (find(this->openListVec.begin(), this->openListVec.end(), tState) != this->openListVec.end()) {
@@ -61,10 +56,8 @@ class Astar : public Searcher<S, T> {
                         closeList.pop_back();
                         toOpen.push_back(n);
 
-                        if (n->getState() == tState->getState()) {
+                        if (n == tState)
                             this->openListVec.push_back(n);
-                            break;
-                        }
                     }
                 } else
                     this->openListVec.push_back(tState);
@@ -77,7 +70,7 @@ class Astar : public Searcher<S, T> {
         if (!pVec.empty())
             return searchable->getDirections(pVec);
         else throw ("path is empty!\n");
-        }
+    }
 
 
     State<T> *lowest(State<T> *g) {
@@ -107,15 +100,11 @@ class Astar : public Searcher<S, T> {
             }
             temporaryStVec.push_back(st);
         }
-        for (int i = 0; i < temporaryStVec.size(); i++) {
-            State<T> *t = temporaryStVec[i];
-            this->openListVec.push_back(t);
-        }
+        for (int i = 0; i < temporaryStVec.size(); i++)
+            this->openListVec.push_back(temporaryStVec[i]);
         return lowValst;
     }
-
 };
-
 
 
 #endif //PROJ_2_ASTAR_H

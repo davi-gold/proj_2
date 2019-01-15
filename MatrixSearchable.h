@@ -21,6 +21,7 @@ class MatrixSearchable : public ISearchable<Point>, Stringable {
     vector<vector<State<Point> *>> myMatrix;
     State<Point> *initialState;
     State<Point> *goalState;
+    bool updateVisit = true;
 public:
     MatrixSearchable() {
 
@@ -74,9 +75,6 @@ public:
         initialState = myMatrix.at(i).at(j);
     }
 
-    State<Point> *getGoal() {
-        return this->goalState;
-    }
 
     void setGoalState(string index) {
         unsigned long int comma = index.find(',');
@@ -252,11 +250,16 @@ public:
 
         for (std::list<State<Point> *>::iterator it = myList.begin(); it != myList.end(); ++it) {
             if (!(*it)->getVisit()) {
-                (*it)->setVisited(true);
+                if (!this->updateVisit)
+                    (*it)->setVisited(true);
                 final.push_back(*it);
             }
         }
         return final;
+    }
+
+    void updateVisitOnOff(bool b) {
+        this->updateVisit = b;
     }
 };
 
