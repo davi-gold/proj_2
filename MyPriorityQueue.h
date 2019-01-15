@@ -17,7 +17,10 @@ class MyPriorityQueue {
     class Compare {
     public:
         bool operator()(State<T> *one, State<T> *two) {
-            return (one->getCostPath() > two->getCostPath());
+            if (one->getCostPath() > two->getCostPath())
+                return true;
+            else
+                return false;
         }
     };
 
@@ -28,7 +31,7 @@ class MyPriorityQueue {
 public:
     // empty constructor
     MyPriorityQueue() {
-//        this->queue = new priority_queue<State<T> *>();
+        this->queue = new priority_queue<State<T> *, vector<State<T> *>, Compare>();
     }
 
 
