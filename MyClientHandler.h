@@ -19,11 +19,11 @@ using Point =std::pair<int, int>;
 
 class MyClientHandler : public ClientHandler {
 
-    Solver<MatrixSearchable, string> *solver;
-    CacheManager<MatrixSearchable, string> *cm;
+    Solver<MatrixSearchable*, StringableString> *solver;
+    CacheManager<MatrixSearchable*, StringableString> *cm;
 public:
-    MyClientHandler(Solver<MatrixSearchable, string> *s,
-                    CacheManager<MatrixSearchable, string> *c) {
+    MyClientHandler(Solver<MatrixSearchable*, StringableString> *s,
+                    CacheManager<MatrixSearchable*, StringableString> *c) {
         solver = s;
         cm = c;
     };
@@ -87,9 +87,9 @@ public:
         //creating MatrixSearchable from string vector
         MatrixSearchable myMat = MatrixSearchable();
         myMat.convertFromString(fromClient);
-        if (this->cm->isSaved(myMat)) {
+        if (this->cm->isSaved((&myMat))) {
             //myMat solution returns a string
-            StringableString sol = StringableString(this->cm->getSolution(myMat));
+            StringableString sol = StringableString(this->cm->getSolution(&myMat));
             string solution = sol.getString();
 
             // send the solution to client
@@ -97,10 +97,10 @@ public:
             send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
             //still haven't solved this problem
         } else {
-            string sol = this->solver->solve(myMat);
+            StringableString sol = this->solver->solve(&myMat);
             // save the solution
             vector<string> myMatStrings = myMat.convertToString();
-            this->cm->saveSolution(myMat, sol);
+            this->cm->saveSolution(&myMat, sol);
             //converting myMat searchable to vector of strings
             vector<string> matVecString = myMat.convertToString();
             //converting vetcotr of strings to string for writing to client
