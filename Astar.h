@@ -37,8 +37,8 @@ class Astar : public Searcher<S, T> {
             while (!successors.empty()) {
                 State<T> *tState = successors.back();
                 successors.pop_back();
-//                if (tState->getVisit())
-//                    continue;
+                if (tState->getVisit())
+                    continue;
 
                 double newPath = thisState->getCostPath() + tState->getCost();
                 if (find(this->openListVec.begin(), this->openListVec.end(), tState) != this->openListVec.end()) {

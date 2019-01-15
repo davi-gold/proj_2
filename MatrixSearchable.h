@@ -23,9 +23,7 @@ class MatrixSearchable : public ISearchable<Point>, Stringable {
     State<Point> *goalState;
     bool updateVisit = true;
 public:
-    MatrixSearchable() {
-
-    }
+    MatrixSearchable() {}
 
 //sets myMatrix
     void setMatrix(vector<string> matList) {
@@ -75,7 +73,6 @@ public:
         initialState = myMatrix.at(i).at(j);
     }
 
-
     void setGoalState(string index) {
         unsigned long int comma = index.find(',');
         string iStr = index.substr(0, comma);
@@ -84,6 +81,10 @@ public:
         int j = atoi(jStr.c_str());
 
         goalState = myMatrix.at(i).at(j);
+    }
+
+    virtual State<Point> *getGoal() {
+        return this->goalState;
     }
 
     virtual State<Point> *getInitialState() {
@@ -258,9 +259,6 @@ public:
         return final;
     }
 
-    void updateVisitOnOff(bool b) {
-        this->updateVisit = b;
-    }
 };
 
 
