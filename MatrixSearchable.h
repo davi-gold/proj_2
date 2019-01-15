@@ -251,7 +251,7 @@ public:
 
         for (std::list<State<Point> *>::iterator it = myList.begin(); it != myList.end(); ++it) {
             if (!(*it)->getVisit()) {
-                if (!this->updateVisit)
+                if (this->updateVisit)
                     (*it)->setVisited(true);
                 final.push_back(*it);
             }
