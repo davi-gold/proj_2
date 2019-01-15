@@ -8,18 +8,16 @@
 #include "Solver.h"
 #include "Searcher.h"
 
-template <class S, class T>
-class MatrixSolver : public Solver<ISearchable<T>, S>{
-    ISearcher <S, T> iSrch;
-    ISearchable<T> iSrchable;
+template <class S>
+class MatrixSolver : public Solver<ISearchable<Point>*, S>{
+    ISearcher <S, Point>* iSrch;
 public:
-    MatrixSolver(ISearcher<S, T> s, ISearchable<T> is){
+    explicit MatrixSolver(ISearcher<S, Point>* s){
         this->iSrch = s;
-        this->iSrchable = is;
     }
 
-    const S& solve(ISearchable<T>& p){
-        this->iSrch.search(this->p);
+    S solve(ISearchable<Point>* prob)override{
+        this->iSrch->search(prob);
     }
 
 };

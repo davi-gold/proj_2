@@ -19,11 +19,11 @@ using Point =std::pair<int, int>;
 
 class MyClientHandler : public ClientHandler {
 
-    Solver<MatrixSearchable, StringableString> *solver;
-    CacheManager<MatrixSearchable, StringableString> *cm;
+    Solver<MatrixSearchable, string> *solver;
+    CacheManager<MatrixSearchable, string> *cm;
 public:
-    MyClientHandler(Solver<MatrixSearchable, StringableString> *s,
-                    CacheManager<MatrixSearchable, StringableString> *c) {
+    MyClientHandler(Solver<MatrixSearchable, string> *s,
+                    CacheManager<MatrixSearchable, string> *c) {
         solver = s;
         cm = c;
     };
@@ -97,8 +97,7 @@ public:
             send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
             //still haven't solved this problem
         } else {
-            //myMat solution returns a string
-            StringableString sol = StringableString(this->solver->solve(myMat));
+            string sol = this->solver->solve(myMat);
             // save the solution
             vector<string> myMatStrings = myMat.convertToString();
             this->cm->saveSolution(myMat, sol);

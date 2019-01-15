@@ -15,6 +15,8 @@ public:
 
     StringableString(string str);
 
+    StringableString();
+
     virtual vector<string> convertToString();
 
     virtual void convertFromString(vector<string> fromString);

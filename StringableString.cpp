@@ -8,6 +8,10 @@ StringableString:: StringableString(string str){
     solution = str;
 }
 
+StringableString:: StringableString(){
+    solution = {};
+}
+
 vector<string> StringableString:: convertToString(){
 
     vector<string> vecSolution;

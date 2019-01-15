@@ -17,8 +17,7 @@ using namespace std;
 template<class P, class S>
 
 class FileCacheManager : public CacheManager<P, S> {
-    map<P, S> probSol;
-    map<string, string> stringPSMap;
+    map<vector<string>, vector<string>> probSol;
     string fileName;
 
 public:
@@ -29,8 +28,9 @@ public:
     };
 
     virtual bool isSaved(P p) {
-        for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
-            if (it->first == p) {
+        vector<string> pVec = p.convertToString();
+        for (std::map<vector<string>, vector<string>>::iterator it=probSol.begin(); it!=probSol.end(); ++it) {
+            if (it->first == pVec) {
                 return true;
             }
         }
@@ -38,21 +38,24 @@ public:
     };
 
     virtual S getSolution(P p) {
-        for (typename::map<P, S>::iterator it = probSol.begin(); it != probSol.end(); ++it) {
-            if (it->first == p) {
-                string temp = it->second;
-                temp.push_back('\n');
-                return temp;
+        S sol;
+        vector<string> pVec = p.convertToString();
+        for (std::map<vector<string>, vector<string>>::iterator it=probSol.begin(); it!=probSol.end(); ++it) {
+            if (it->first == pVec) {
+                vector<string> temp = it->second;
+                sol.convertFromString(temp);
+                return sol;
             }
         }
         throw "no saved solution for that problem";
     };
 
     virtual void saveSolution(P p, S s) {
-        probSol.insert(pair<P, S>(p, s));
-        //NEED TO USE WTVR METHOD I CHOOSE TO CONVERT P AND S TO STRINGS INSTEAD OF 2 ROWS BELOW
         vector<string> prob = p.convertToString();
         vector<string> sol = s.convertToString();
+
+        probSol.insert(pair<vector<string>, vector<string>>(prob, sol));
+
         ofstream myFile(fileName, ios::app);
 
         //want to append the file
@@ -94,8 +97,6 @@ public:
             for(int j = i+1;j<probSize;j++){
                 probVec.emplace_back(stringsVec[j]);
             }
-            //creating problem from strings vector
-            prob = prob.convertFromString(stringsVec);
             i+=probSize;
             //solution size
             int solSize = stoi(stringsVec[i].c_str());
@@ -104,12 +105,13 @@ public:
             for(int k = i;k<solSize;k++){
                 solVec.emplace_back(stringsVec[k]);
             }
-            sol = sol.converFromString(solVec);
             i+=solSize;
+            //inserting problem and solution
+            probSol.insert(pair<vector<string>, vector<string>>(probVec, solVec));
         }
-        //inserting problem and solution
-        probSol.insert(pair<P, S>(prob, sol));
+
     };
+
 };
 
 
