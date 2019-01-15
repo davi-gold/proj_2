@@ -8,6 +8,7 @@
 #include "BestFirstSearch.h"
 #include "StringableString.h"
 #include "ISearchable.h"
+#include "BFS.h"
 
 
 using Point =std::pair<int,int>;
@@ -30,15 +31,15 @@ int boot::Main::main(int argc, char *argv[]) {
     vector<string> myVec;
     myVec.push_back("1,2,3");
     myVec.push_back("4,5,6");
-    myVec.push_back("7,8,9");
+   // myVec.push_back("7,8,9");
     MatrixSearchable *matrix = new MatrixSearchable();
     matrix->setMatrix(myVec);
     matrix->setInitialState("0,0");
-    matrix->setGoalState("2,1");
+    matrix->setGoalState("1,2");
 
     //list<State<Point> *> posS = matrix->getAllPossibleStates(matrix->getInitialState());
 
-    Searcher<string, Point> *srch = new BestFirstSearch<string, Point>();
+    Searcher<string, Point> *srch = new BFS<string, Point>();
     string sol = srch->search(matrix);
 
     return 0;
