@@ -259,6 +259,8 @@ public:
         return final;
     }
 
+    virtual void updateVisitOnOff(bool b) { this->updateVisit = b; }
+
 };
 
 
