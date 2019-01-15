@@ -27,15 +27,15 @@ int boot::Main::main(int argc, char *argv[]) {
     matrix->setInitialState("0,0");
     matrix->setGoalState("1,2");
 
-    CacheManager<MatrixSearchable, StringableString> *fileCM =
-           new FileCacheManager<MatrixSearchable, StringableString>("fileCache.txt");
+    CacheManager<MatrixSearchable*, StringableString> *fileCM =
+           new FileCacheManager<MatrixSearchable*, StringableString>("fileCache.txt");
 
-    Searcher<string, Point> *srch = new DFS<string, Point>();
+    Searcher<StringableString, Point> *srch = new DFS<StringableString, Point>();
 
-    Solver<ISearchable<Point>*, string> *slvr = new MatrixSolver<string>(srch);
+    Solver<MatrixSearchable*, StringableString> *slvr = new MatrixSolver<StringableString>(srch);
 
 
-    ClientHandler *mch = new MyClientHandler(slvr, fileCM);
+   // ClientHandler *mch = new MyClientHandler(slvr, fileCM);
 
     // calling 'open' function in server
     //server->open(atoi(argv[1]), mch);

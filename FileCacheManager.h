@@ -28,7 +28,7 @@ public:
     };
 
     virtual bool isSaved(P p) {
-        vector<string> pVec = p.convertToString();
+        vector<string> pVec = p->convertToString();
         for (std::map<vector<string>, vector<string>>::iterator it=probSol.begin(); it!=probSol.end(); ++it) {
             if (it->first == pVec) {
                 return true;
@@ -39,7 +39,7 @@ public:
 
     virtual S getSolution(P p) {
         S sol;
-        vector<string> pVec = p.convertToString();
+        vector<string> pVec = p->convertToString();
         for (std::map<vector<string>, vector<string>>::iterator it=probSol.begin(); it!=probSol.end(); ++it) {
             if (it->first == pVec) {
                 vector<string> temp = it->second;
@@ -51,7 +51,7 @@ public:
     };
 
     virtual void saveSolution(P p, S s) {
-        vector<string> prob = p.convertToString();
+        vector<string> prob = p->convertToString();
         vector<string> sol = s.convertToString();
 
         probSol.insert(pair<vector<string>, vector<string>>(prob, sol));

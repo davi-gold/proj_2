@@ -9,14 +9,14 @@
 #include "Searcher.h"
 
 template <class S>
-class MatrixSolver : public Solver<ISearchable<Point>*, S>{
+class MatrixSolver : public Solver<MatrixSearchable*, S>{
     ISearcher <S, Point>* iSrch;
 public:
     explicit MatrixSolver(ISearcher<S, Point>* s){
         this->iSrch = s;
     }
 
-    S solve(ISearchable<Point>* prob)override{
+    S solve(MatrixSearchable* prob){
         this->iSrch->search(prob);
     }
 
