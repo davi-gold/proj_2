@@ -9,6 +9,7 @@
 #include "ISearchable.h"
 #include "Stringable.h"
 #include <vector>
+
 //#include <bits/valarray_after.h>
 
 using Point = std::pair<int, int>;
@@ -218,7 +219,7 @@ public:
 
     }
 
-    virtual string getDirections(vector<State<Point> *> statesVec) {
+    virtual StringableString getDirections(vector<State<Point> *> statesVec) {
         string directions = {};
         for (int k = 0; k < statesVec.size() - 1; k++) {
             int i1 = statesVec[k]->getState().first;
@@ -242,7 +243,7 @@ public:
             }
             directions += direc;
         }
-        return directions;
+        return StringableString(directions);
     }
 
     list<State<Point> *> checkSetPossibleStates(list<State<Point> *> myList) {
