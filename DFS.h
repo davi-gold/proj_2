@@ -28,10 +28,10 @@ class DFS : public Searcher<S, T> {
             s = pStack.top();
             pStack.pop();
             this->evalNodes++;
-            if (searchable->isGoalState(s->getState()))
+            if (searchable->isGoalState(s))
                 flag = false;
             if (flag) {
-                if (s->getVisit() == false)
+                if (!(s->getVisit()))
                     s->setVisited(true);
 
                 list<State<T> *> successors = searchable->getAllPossibleStates(s);
@@ -45,11 +45,9 @@ class DFS : public Searcher<S, T> {
             }
         }
         vector<State<T> *> pVec = searchable->backTrace(s);
-        if (pVec != NULL) {
-            if (!pVec.empty())
-                return searchable->getDirections(pVec);
-            else return perror("path is empty!\n");
-        } else return perror("path is NULL!\n");
+        if (!pVec.empty())
+            return searchable->getDirections(pVec);
+        else throw("path is empty!\n");
     }
 };
 

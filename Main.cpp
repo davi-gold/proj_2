@@ -9,21 +9,22 @@
 #include "StringableString.h"
 #include "ISearchable.h"
 #include "BFS.h"
+#include "MyClientHandler.h"
+#include "DFS.h"
 
 
 using Point =std::pair<int,int>;
 
 int boot::Main::main(int argc, char *argv[]) {
-/*
     // creating the server object
-    server_side::Server *server = new MySerialServer();
+    /*server_side::Server *server = new MySerialServer();
 
     // Solver --> StringReverser
     // ‫‪CacheManager --> FileCacheManager
-    StringReverser *strReverse = new StringReverser();
+
     CacheManager<string, string> *fileCM = new FileCacheManager<string, string>("fileCache.txt");
 
-    ClientHandler *mch = new MyTestClientHandler(strReverse, fileCM);
+    ClientHandler *mch = new MyClientHandler(strReverse, fileCM);
 
     // calling 'open' function in server
     server->open(atoi(argv[1]), mch);
@@ -39,7 +40,7 @@ int boot::Main::main(int argc, char *argv[]) {
 
     //list<State<Point> *> posS = matrix->getAllPossibleStates(matrix->getInitialState());
 
-    Searcher<string, Point> *srch = new BFS<string, Point>();
+    Searcher<string, Point> *srch = new DFS<string, Point>();
     string sol = srch->search(matrix);
 
     return 0;
