@@ -13,15 +13,24 @@ using namespace std;
 template<class T>
 
 class MyPriorityQueue {
+    class Compare {
+    public:
+        bool operator()(State<T> *one, State<T> *two) {
+            if (one->getCostPath() > two->getCostPath())
+                return true;
+            else
+                return false;
+        }
+    };
 
     // data members
-    priority_queue<State<T> *> *queue;
+    priority_queue<State<T> *, vector<State<T> *>, Compare> *queue;
 
     // CTOR and functions
 public:
     // empty constructor
     MyPriorityQueue() {
-        this->queue = new priority_queue<State<T> *>();
+        this->queue = new priority_queue<State<T> *, vector<State<T> *>, Compare>();
     }
 
 
@@ -34,7 +43,7 @@ public:
 
     // find in queue func
     bool find(State<T> *state) {
-        priority_queue<State<T> *> list = *this->queue;
+        priority_queue<State<T> *, vector<State<T> *>, Compare> list = *this->queue;
         while (!list.empty()) {
            // if (state->equals(std::move(const_cast<int &>(list.top()))))
            State<T> *curState = list.top();
@@ -78,7 +87,7 @@ public:
             this->queue->push(tVec[i]);
     }
 
-    priority_queue<State<T> *>* getQueue() {
+    priority_queue<State<T> *, vector<State<T> *>, Compare> *getQueue() {
         return this->queue;
     }
 };

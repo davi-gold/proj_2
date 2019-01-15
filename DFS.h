@@ -15,7 +15,6 @@ using namespace std;
 template<class S, class T>
 
 
-
 class DFS : public Searcher<S, T> {
     S search(ISearchable<T> *searchable) {
 
