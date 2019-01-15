@@ -73,6 +73,9 @@ public:
         initialState = myMatrix.at(i).at(j);
     }
 
+    State<Point> *getGoal() {
+        return this->goalState;
+    }
 
     void setGoalState(string index) {
         unsigned long int comma = index.find(',');
@@ -168,7 +171,7 @@ public:
             possibleStates.push_back(myMatrix.at(i + 1).at(j));
         }
 
-        list<State<Point> *> final = checkSetPossibleStates(possibleStates);
+        list < State<Point> * > final = checkSetPossibleStates(possibleStates);
 
         return final;
     }
@@ -180,9 +183,9 @@ public:
             for (int j = 0; j < colNum; j++) {
                 State<Point> *point = myMatrix.at(i).at(j);
                 string pointString = to_string(point->getCost());
-                rowOfPoints+=pointString;
-                if(j!=colNum-1){
-                    rowOfPoints+=",";
+                rowOfPoints += pointString;
+                if (j != colNum - 1) {
+                    rowOfPoints += ",";
                 }
             }
             matrixString.push_back(rowOfPoints);
@@ -217,11 +220,11 @@ public:
 
     virtual string getDirections(vector<State<Point> *> statesVec) {
         string directions = {};
-        for (int k = 0; k < statesVec.size()-1; k++) {
+        for (int k = 0; k < statesVec.size() - 1; k++) {
             int i1 = statesVec[k]->getState().first;
             int j1 = statesVec[k]->getState().second;
-            int i2 = statesVec[k+1]->getState().first;
-            int j2 = statesVec[k+1]->getState().second;
+            int i2 = statesVec[k + 1]->getState().first;
+            int j2 = statesVec[k + 1]->getState().second;
             string direc;
             //cannot be a combination of two because there is no diagonal
             if (i1 < i2) {
@@ -242,12 +245,12 @@ public:
         return directions;
     }
 
-    list<State<Point> *> checkSetPossibleStates(list<State<Point> *> myList){
+    list<State<Point> *> checkSetPossibleStates(list<State<Point> *> myList) {
 
-        list<State<Point> *> final;
+        list < State<Point> * > final;
 
-        for(std::list<State<Point> *>::iterator it=myList.begin(); it != myList.end(); ++it){
-            if(!(*it)->getVisit()){
+        for (std::list<State<Point> *>::iterator it = myList.begin(); it != myList.end(); ++it) {
+            if (!(*it)->getVisit()) {
                 (*it)->setVisited(true);
                 final.push_back(*it);
             }
