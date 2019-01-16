@@ -10,6 +10,8 @@
 #include "BFS.h"
 #include "MyClientHandler.h"
 #include "DFS.h"
+#include "Astar.h"
+#include "MyParallelServer.h"
 
 
 using Point =std::pair<int,int>;
@@ -30,7 +32,7 @@ int boot::Main::main(int argc, char *argv[]) {
     CacheManager<MatrixSearchable*, StringableString> *fileCM =
            new FileCacheManager<MatrixSearchable*, StringableString>("fileCache.txt");
 
-    Searcher<StringableString, Point> *srch = new DFS<StringableString, Point>();
+    Searcher<StringableString, Point> *srch = new Astar<StringableString, Point>();
 
     Solver<MatrixSearchable*, StringableString> *slvr = new MatrixSolver<StringableString>(srch);
 
@@ -42,4 +44,4 @@ int boot::Main::main(int argc, char *argv[]) {
     while(true){};
 
     return 0;
-}
+};

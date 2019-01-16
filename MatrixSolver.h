@@ -16,7 +16,7 @@ public:
         this->iSrch = s;
     }
 
-    S solve(MatrixSearchable* prob){
+    S* solve(MatrixSearchable* prob){
         this->iSrch->search(prob);
     }
 

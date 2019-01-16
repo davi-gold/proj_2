@@ -92,21 +92,21 @@ public:
             //myMat solution returns a string
             StringableString sol = *(this->cm->getSolution(&myMat));
             string solution = sol.getString();
+            solution+="\r\n";
 
             // send the solution to client
             const char *fromClientChar = solution.c_str(); // convert the string to char *
             send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client
             //still haven't solved this problem
         } else {
-            StringableString sol = this->solver->solve(&myMat);
+            StringableString *pSol = this->solver->solve(&myMat);
+            StringableString sol = *pSol;
             // save the solution
             vector<string> myMatStrings = myMat.convertToString();
             this->cm->saveSolution(&myMat, sol);
-            //converting myMat searchable to vector of strings
-            vector<string> matVecString = myMat.convertToString();
-            //converting vetcotr of strings to string for writing to client
-            string vecString = convertVectorToString(matVecString);
-            const char *solutionChar = vecString.c_str(); // convert the string to char *
+            string solString = sol.getString();
+            solString+="\r\n";
+            const char *solutionChar = solString.c_str(); // convert the string to char *
             send(socket, solutionChar, strlen(solutionChar), 0); // write to client
         }
         close(socket);
