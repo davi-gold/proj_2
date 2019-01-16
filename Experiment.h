@@ -14,10 +14,10 @@
 #include "ISearchable.h"
 #include "BFS.h"
 #include "DFS.h"
+#include "Astar.h"
 #include <fstream>
 #include <sstream>
 
-#define ENDOFSTRING '\0'
 using namespace std;
 
 class Experiment {
@@ -41,63 +41,92 @@ public:
         int size;
         string line;
 
-            for (int m = 0; m < 10; m++) {
-                vector<string> mat;
+        for (int m = 0; m < 1; m++) {
+            vector<string> mat;
 
-                // configure size
-                while (fileStr[i] != '\n') {
-                    line += fileStr[i];
-                    i++;
-                }
-                size = std::stoi(line);
-                line = "";
+            // configure size
+            while (fileStr[i] != '\n') {
+                line += fileStr[i];
                 i++;
-                int numOfLines = 0;
-
-                // reading lines
-                while (numOfLines < size) {
-                    while (fileStr[i] != '\n') {
-                        line += fileStr[i];
-                        i++;
-                    }
-                    numOfLines++;
-                    mat.push_back(line);
-                    line = "";
-                    i++;
-                }
-
-                // configure initial and goal
-                while (fileStr[i] != '\n') {
-                    line += fileStr[i];
-                    i++;
-                }
-                initial = line;
-                line = "";
-                i++;
-
-                while (fileStr[i] != '\n') {
-                    line += fileStr[i];
-                    i++;
-                }
-                goal = line;
-                line = "";
-                i++;
-
-                // create matrix
-                MatrixSearchable *matrix = new MatrixSearchable();
-                matrix->setMatrix(mat);
-                matrix->setInitialState(initial);
-                matrix->setGoalState(goal);
-
-                this->matVec.push_back(matrix);
-                m++;
             }
+            size = std::stoi(line);
+            line = "";
+            i++;
+            int numOfLines = 0;
+
+            // reading lines
+            while (numOfLines < size) {
+                while (fileStr[i] != '\n') {
+                    line += fileStr[i];
+                    i++;
+                }
+                numOfLines++;
+                mat.push_back(line);
+                line = "";
+                i++;
+            }
+
+            // configure initial and goal
+            while (fileStr[i] != '\n') {
+                line += fileStr[i];
+                i++;
+            }
+            initial = line;
+            line = "";
+            i++;
+
+            while (fileStr[i] != '\n') {
+                line += fileStr[i];
+                i++;
+            }
+            goal = line;
+            line = "";
+            i++;
+
+            // create matrix
+            MatrixSearchable *matrix = new MatrixSearchable();
+            matrix->setMatrix(mat);
+            matrix->setInitialState(initial);
+            matrix->setGoalState(goal);
+
+            this->matVec.push_back(matrix);
+            m++;
+        }
     }
 
-    void run(){
+    void run() {
         this->loadMatrices();
-        for(int i = 0; i < this->matVec.size(); i++)
 
+        Searcher<StringableString, Point> *bestFirstSearch = new BestFirstSearch<StringableString, Point>();
+        Searcher<StringableString, Point> *astar = new Astar<StringableString, Point>();
+        Searcher<StringableString, Point> *dfs = new DFS<StringableString, Point>();
+
+
+        for (int i = 0; i < this->matVec.size(); i++) {
+            std::cout << "Matrix number " << i + 1 << "\n" << endl;
+            // best first search
+            StringableString *bestfs = bestFirstSearch->search(matVec[i]);
+            int pathCostBest = matVec[i]->getGoal()->getCostPath();
+            int nodesEvalBest = bestFirstSearch->getNumOfNodesEval();
+            std::cout << "<< BEST FIRST SEARCH>> " << endl;
+            std::cout << "PATHCOST     NODES" << endl;
+            std::cout << pathCostBest << "           " << nodesEvalBest << endl;
+
+            StringableString *a = astar->search(matVec[i]);
+            int pathCostAstar = matVec[i]->getGoal()->getCostPath();
+            int nodesEvalAstar = astar->getNumOfNodesEval();
+            std::cout << "\n<< A* >> " << endl;
+            std::cout << "PATHCOST     NODES" << endl;
+            std::cout << pathCostAstar << "           " << nodesEvalAstar << endl;
+
+
+            StringableString *dfsS = dfs->search(matVec[i]);
+            int pathCostDFS = matVec[i]->getGoal()->getCostPath();
+            int nodesEvalDFS = dfs->getNumOfNodesEval();
+            std::cout << "\n<< DFS >> " << endl;
+            std::cout << "PATHCOST     NODES" << endl;
+            std::cout << pathCostDFS << "           " << nodesEvalDFS << endl;
+        }
     }
 };
 

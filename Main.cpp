@@ -43,7 +43,7 @@ int boot::Main::main(int argc, char *argv[]) {
 //    while(true){};
 
     Experiment *exp = new Experiment(argv);
-    exp->loadMatrices();
+    exp->run();
 
     return 0;
 }
