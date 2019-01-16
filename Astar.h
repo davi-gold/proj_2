@@ -15,7 +15,7 @@ class Astar : public Searcher<S, T> {
     vector<State<T> *> openListVec;
 
 
-    S search(ISearchable<T> *searchable) {
+    S* search(ISearchable<T> *searchable) {
         this->evalNodes = 0;
         vector<State<T> *> closeList;
         State<T> *initialState = searchable->getInitialState();

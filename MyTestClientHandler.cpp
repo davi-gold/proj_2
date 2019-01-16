@@ -7,6 +7,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "MyTestClientHandler.h"
+#include "StringableString.h"
 
 // constructor
 MyTestClientHandler::MyTestClientHandler(Solver<string, string> *s, CacheManager<string, string> *c) {
@@ -68,7 +69,8 @@ void MyTestClientHandler::handleClient(int socket) {
             finish = true;
         } else {
             if (this->cm->isSaved(fromClient)) {
-                string sol = this->cm->getSolution(fromClient);
+                StringableString sSol = *(this->cm->getSolution(fromClient));
+                string sol = sSol.getString();
                 // send the solution to client
                 const char *fromClientChar = sol.c_str(); // convert the string to char *
                 send(socket, fromClientChar, strlen(fromClientChar), 0); // write to client

@@ -14,7 +14,7 @@ template <class S, class T>
 class ISearcher {
 
 public:
-    virtual S search(ISearchable<T> *searchable) = 0;
+    virtual S* search(ISearchable<T> *searchable) = 0;
 };
 
 #endif //PROJ_2_ISEARCHER_H

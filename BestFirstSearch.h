@@ -13,7 +13,7 @@ template<class S, class T>
 
 class BestFirstSearch : public Searcher<S, T> {
 public:
-    virtual S search(ISearchable<T> *searchable) {
+    virtual S* search(ISearchable<T> *searchable) {
         State<T> *s = searchable->getInitialState();
         this->openList->push(s); // OPEN = [initial state] ::: a priority queue of states to be evaluated
         s->setCameFrom(NULL);

@@ -37,14 +37,15 @@ public:
         return false;
     };
 
-    virtual S getSolution(P p) {
+    virtual S* getSolution(P p) {
         S sol;
         vector<string> pVec = p->convertToString();
         for (std::map<vector<string>, vector<string>>::iterator it=probSol.begin(); it!=probSol.end(); ++it) {
             if (it->first == pVec) {
                 vector<string> temp = it->second;
                 sol.convertFromString(temp);
-                return sol;
+                S *pSol = &sol;
+                return pSol;
             }
         }
         throw "no saved solution for that problem";

@@ -23,7 +23,7 @@ public:
         this->evalNodes = 0;
     };
 
-    virtual S search(ISearchable<T> *searchable) = 0;
+    virtual S* search(ISearchable<T> *searchable) = 0;
 
     // set the number of nodes evaluated
     void setEvaluatedNodes(int n) { this->evalNodes = n; }

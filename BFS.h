@@ -11,7 +11,7 @@
 template<class S, class T>
 
 class BFS : public Searcher <S, T> {
-    S search(ISearchable<T> *searchable) {
+    S* search(ISearchable<T> *searchable) {
         vector<State<T> *> pVec;
         unordered_set<State<T> *> closed;
         State<T> *s = searchable->getInitialState();
@@ -39,7 +39,7 @@ class BFS : public Searcher <S, T> {
             }
         }
         if (!pVec.empty())
-            return searchable->getDirections(pVec);
+            return (searchable->getDirections(pVec));
         else throw ("path is empty!\n");
     }
 };

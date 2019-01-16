@@ -11,7 +11,7 @@ template <class P, class S>
 class CacheManager {
 public:
     virtual bool isSaved(P p) = 0;
-    virtual S getSolution(P p) = 0;
+    virtual S* getSolution(P p) = 0;
     virtual void saveSolution(P p, S s) = 0;
 };
 

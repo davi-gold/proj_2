@@ -16,7 +16,7 @@ template<class S, class T>
 
 
 class DFS : public Searcher<S, T> {
-    S search(ISearchable<T> *searchable) {
+    S* search(ISearchable<T> *searchable) {
 
         stack<State<T> *> pStack;
         State<T> *s = searchable->getInitialState();
@@ -45,8 +45,9 @@ class DFS : public Searcher<S, T> {
             }
         }
         vector<State<T> *> pVec = searchable->backTrace(s);
-        if (!pVec.empty())
+        if (!pVec.empty()) {
             return searchable->getDirections(pVec);
+        }
         else throw("path is empty!\n");
     }
 };

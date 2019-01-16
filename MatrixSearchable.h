@@ -218,7 +218,7 @@ public:
 
     }
 
-    virtual StringableString getDirections(vector<State<Point> *> statesVec) {
+    virtual StringableString* getDirections(vector<State<Point> *> statesVec) {
         string directions = {};
         for (int k = 0; k < statesVec.size() - 1; k++) {
             int i1 = statesVec[k]->getState().first;
@@ -242,7 +242,8 @@ public:
             }
             directions += direc;
         }
-        return StringableString(directions);
+        StringableString *pDir = new StringableString(directions);
+        return pDir;
     }
 
     list<State<Point> *> checkSetPossibleStates(list<State<Point> *> myList) {

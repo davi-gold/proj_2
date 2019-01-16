@@ -90,7 +90,7 @@ public:
         myMat.convertFromString(fromClient);
         if (this->cm->isSaved((&myMat))) {
             //myMat solution returns a string
-            StringableString sol = StringableString(this->cm->getSolution(&myMat));
+            StringableString sol = *(this->cm->getSolution(&myMat));
             string solution = sol.getString();
 
             // send the solution to client
