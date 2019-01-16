@@ -40,7 +40,7 @@ public:
             // if the message from client is not empty
             if (messageLength > 0) {
                 // iterate over the buffer to find end of line
-                for (int i = 0; i < messageLength; i++) {
+                for (int i = 0; i < messageLength-1; i++) {
                     if (problemTemp == "end") {
                         switchFlag = false;
                     }
@@ -55,6 +55,7 @@ public:
                             // copy content from problemTemp to problemFinal
                             problemFinal.push_back(problemTemp);
                             problemTemp = "";
+                            //memset(buffer, 0, sizeof(buffer));
                         } else {
                             perror("string is invalid\n");
                             vector<string> bad;

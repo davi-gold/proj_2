@@ -38,7 +38,7 @@ int boot::Main::main(int argc, char *argv[]) {
     ClientHandler *mch = new MyClientHandler(slvr, fileCM);
 //
 //     calling 'open' function in server
-    //server->open(atoi(argv[1]), mch);
+    server->open(atoi(argv[1]), mch);
     while(true){};
 
     return 0;

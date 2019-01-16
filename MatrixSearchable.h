@@ -207,14 +207,14 @@ public:
         fromString.pop_back();
         vector<string> matString = fromString;
 
+        //setting matrix
+        setMatrix(matString);
+
         //setting initial state
         setInitialState(iState);
 
         //setting goal state
         setGoalState(gState);
-
-        //setting matrix
-        setMatrix(matString);
 
     }
 
