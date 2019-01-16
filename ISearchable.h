@@ -24,6 +24,8 @@ public:
     virtual list<State<T>*> getAllPossibleStates(State<T>* s) = 0;
     virtual void updateVisitOnOff(bool b) = 0;
     virtual State<T> *getGoal() = 0;
+
+    virtual void setGoal(State<T> *newGoal) = 0;
     vector<State<T> *> backTrace(State<T> *goalState) {
         vector<State<T> *> path;
         path.push_back(goalState);

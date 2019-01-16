@@ -46,6 +46,14 @@ class DFS : public Searcher<S, T> {
         }
         vector<State<T> *> pVec = searchable->backTrace(s);
         if (!pVec.empty()) {
+            int pathCost = 0;
+            for (int i = 0; i < pVec.size(); i++) {
+                pathCost += pVec[i]->getCost();
+            }
+            State<T> *newGoal = searchable->getGoal();
+            newGoal->setCostPath(pathCost);
+            searchable->setGoal(newGoal);
+
             return searchable->getDirections(pVec);
         }
         else throw("path is empty!\n");

@@ -22,7 +22,6 @@ class BFS : public Searcher <S, T> {
 
         while (!this->openList->getQueue()->empty() && flag == true) { // while openList is not empty
             State<T> *n = this->openList->popAndGet();
-            this->evalNodes++;
             if (searchable->isGoalState(n)) {
                 closed.insert(n);
                 pVec = searchable->backTrace(n);
@@ -38,8 +37,17 @@ class BFS : public Searcher <S, T> {
                 }
             }
         }
-        if (!pVec.empty())
+        if (!pVec.empty()) {
+            int pathCost;
+            for (int i = 0; i < pVec.size(); i++) {
+                pathCost += pVec[i]->getCost();
+            }
+            State<T> *newGoal = searchable->getGoal();
+            newGoal->setCostPath(pathCost);
+            searchable->setGoal(newGoal);
+
             return (searchable->getDirections(pVec));
+        }
         else throw ("path is empty!\n");
     }
 };

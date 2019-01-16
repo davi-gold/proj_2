@@ -41,7 +41,7 @@ public:
         int size;
         string line;
 
-        for (int m = 0; m < 1; m++) {
+        for (int m = 0; m < 10; m++) {
             vector<string> mat;
 
             // configure size
@@ -90,7 +90,6 @@ public:
             matrix->setGoalState(goal);
 
             this->matVec.push_back(matrix);
-            m++;
         }
     }
 
@@ -100,32 +99,54 @@ public:
         Searcher<StringableString, Point> *bestFirstSearch = new BestFirstSearch<StringableString, Point>();
         Searcher<StringableString, Point> *astar = new Astar<StringableString, Point>();
         Searcher<StringableString, Point> *dfs = new DFS<StringableString, Point>();
-
+        Searcher<StringableString, Point> *bfs = new BFS<StringableString, Point>();
 
         for (int i = 0; i < this->matVec.size(); i++) {
-            std::cout << "Matrix number " << i + 1 << "\n" << endl;
+//            std::cout << "Matrix number " << i + 1 << "\n" << endl;
             // best first search
-            StringableString *bestfs = bestFirstSearch->search(matVec[i]);
-            int pathCostBest = matVec[i]->getGoal()->getCostPath();
-            int nodesEvalBest = bestFirstSearch->getNumOfNodesEval();
-            std::cout << "<< BEST FIRST SEARCH>> " << endl;
-            std::cout << "PATHCOST     NODES" << endl;
-            std::cout << pathCostBest << "           " << nodesEvalBest << endl;
+//            MatrixSearchable mat_bestfs = *matVec[i];
+//            StringableString *bestfs = bestFirstSearch->search(&mat_bestfs);
+//            int pathCostBest = mat_bestfs.getGoal()->getCostPath();
+//            int nodesEvalBest = bestFirstSearch->getNumOfNodesEval();
+//            std::cout << "<< BEST FIRST SEARCH>> " << endl;
+//            cout << "\n" << bestfs->getString() << endl;
+//            std::cout << "PATHCOST     NODES" << endl;
+//            std::cout << pathCostBest << "           " << nodesEvalBest << endl;
 
-            StringableString *a = astar->search(matVec[i]);
-            int pathCostAstar = matVec[i]->getGoal()->getCostPath();
-            int nodesEvalAstar = astar->getNumOfNodesEval();
-            std::cout << "\n<< A* >> " << endl;
-            std::cout << "PATHCOST     NODES" << endl;
-            std::cout << pathCostAstar << "           " << nodesEvalAstar << endl;
+//            MatrixSearchable mat_astar = *matVec[i];
+//            StringableString *a = astar->search(&mat_astar);
+//            int pathCostAstar = mat_astar.getGoal()->getCostPath();
+//            int nodesEvalAstar = astar->getNumOfNodesEval();
+//            std::cout << "\n<< A* >> " << endl;
+//            cout << "\n" << a->getString() << endl;
+//            std::cout << "PATHCOST     NODES" << endl;
+//            std::cout << pathCostAstar << "           " << nodesEvalAstar << endl;
 
 
-            StringableString *dfsS = dfs->search(matVec[i]);
-            int pathCostDFS = matVec[i]->getGoal()->getCostPath();
-            int nodesEvalDFS = dfs->getNumOfNodesEval();
-            std::cout << "\n<< DFS >> " << endl;
-            std::cout << "PATHCOST     NODES" << endl;
-            std::cout << pathCostDFS << "           " << nodesEvalDFS << endl;
+//            MatrixSearchable mat_DFS = *matVec[i];
+//            StringableString *dfsS = dfs->search(&mat_DFS);
+//            int pathCostDFS = mat_DFS.getGoal()->getCostPath();
+//            int nodesEvalDFS = dfs->getNumOfNodesEval();
+//            std::cout << "\n<< DFS >> " << endl;
+//            cout << dfsS->getString() << endl;
+//            std::cout << "PATHCOST     NODES" << endl;
+//            std::cout << pathCostDFS << "           " << nodesEvalDFS << endl;
+
+//            MatrixSearchable mat_BFS = *matVec[i];
+//            StringableString *bfsS evalNodes= bfs->search(&mat_BFS);
+//            int pathCostBFS = mat_BFS.getGoal()->getCostPath();
+//            int nodesEvalBFS = bfs->getNumOfNodesEval();
+//            std::cout << "\n<< BFS >> " << endl;
+//            cout << bfsS->getString() << endl;
+//            std::cout << "PATHCOST     NODES" << endl;
+//            std::cout << pathCostBFS << "           " << nodesEvalBFS << endl;
+
+            MatrixSearchable mat = *matVec[i];
+            StringableString *dfsS = bestFirstSearch->search(&mat);
+            int pathCost = mat.getGoal()->getCostPath();
+//            std::cout << "<< DFS >> " << endl;
+//            std::cout << "PATHCOST" << endl;
+            std::cout << pathCost << endl;
         }
     }
 };

@@ -35,15 +35,17 @@ public:
         rowNum = matList.size();
         colNum = 0;
         string row;
+        string fullRow;
         for (unsigned long int i = 0; i < rowNum; i++) {
             unsigned long int rowCounter = 0;
             unsigned long int comma = 0;
             row = matList.at(i);
+            row += ",";
             string strVal;
             double val;
             for (unsigned long int j = 0; j < (rowCounter + 1); j++) {
-                if (row.size() == 1) {
-                    strVal = row;
+                if (row.size() == 0) {
+                    break;
                 } else {
                     comma = row.find(',');
                     strVal = row.substr(0, comma);
@@ -85,6 +87,10 @@ public:
 
     virtual State<Point> *getGoal() {
         return this->goalState;
+    }
+
+    virtual void setGoal(State<Point> *newGoal) {
+        this->goalState = newGoal;
     }
 
     virtual State<Point> *getInitialState() {
